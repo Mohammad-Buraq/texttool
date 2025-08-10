@@ -1,0 +1,24 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+:root { color-scheme: light; }
+html.dark { color-scheme: dark; }
+body { @apply bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-50; }
+.container { @apply max-w-6xl mx-auto px-4; }
+.card { @apply bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-5; }
+.btn { @apply px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 active:scale-[.99]; }
+.input { @apply w-full border border-gray-300 dark:border-gray-700 rounded-lg p-3 bg-white dark:bg-gray-900; }
+.ta { @apply w-full min-h-[220px] border border-gray-300 dark:border-gray-700 rounded-lg p-3 bg-white dark:bg-gray-900 font-mono; }
+.toolbar { @apply flex flex-wrap gap-2 items-center; }
+.grid2 { @apply grid md:grid-cols-2 gap-4; }
+.small { @apply text-sm text-gray-500 dark:text-gray-400; }
+.prose { max-width: 65ch; }
+.prose h1,.prose h2,.prose h3 { font-weight: 800; letter-spacing:-.01em; }
+/* Typography rhythm for text blocks */
+.prose p, .text-gray-700 { line-height: 1.7; }
+/* globals.css additions */
+.prose :where(h2):not(:where(.not-prose *)) { margin-top: 0.5rem; }
+.prose :where(h3):not(:where(.not-prose *)) { margin-top: 1rem; }
+.prose ul { margin-top: .5rem; }
+.prose ol { margin-top: .5rem; }
+
+kbd { @apply px-1.5 py-0.5 rounded border text-xs border-gray-300 dark:border-gray-700; }
+

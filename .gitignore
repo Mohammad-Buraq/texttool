@@ -1,0 +1,12 @@
+﻿@"
+# dependencies
+node_modules/
+.next/
+.vercel/
+
+# env & misc
+.env*
+.DS_Store
+npm-debug.log*
+yarn-error.log*
+"@ | Out-File -Encoding utf8 .gitignore
