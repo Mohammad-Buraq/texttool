@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import ToolLayout from "@/components/ToolLayout";
+import { Suspense } from "react";
 import { getAllTools, getToolBySlug, getRelatedTools } from "@/data/tools";
 
 /** Pre-render all tool routes (SSG) */
@@ -10,7 +11,7 @@ export async function generateStaticParams() {
 /** Per-page SEO */
 export async function generateMetadata({ params }) {
   const tool = getToolBySlug(params.slug);
-  if (!tool) return { title: "Tool not found • TextTools AI" };
+  if (!tool) return { title: "Tool not found • Text Tools" };
 
   const canonical = `/tools/${tool.slug}`;
   return {
@@ -61,7 +62,9 @@ export default function ToolPage({ params }) {
         longContent={tool.Long ? <tool.Long /> : null}
         accent={tool.accent || "blue"}
       >
-        <ToolComponent />
+        <Suspense fallback={null}>
+          <ToolComponent />
+        </Suspense>
       </ToolLayout>
 
       {faqSchema && (

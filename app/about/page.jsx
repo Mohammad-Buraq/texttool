@@ -8,9 +8,9 @@ export default function About() {
     <div className="space-y-12">
       {/* Intro */}
       <section className="max-w-4xl">
-        <h1 className="text-4xl font-extrabold tracking-tight mb-4">About TextTools AI</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight mb-4">About Text Tools</h1>
         <p className="text-lg text-gray-700 dark:text-gray-300">
-          TextTools AI is a collection of high-quality utilities that run entirely in your browser—
+          Text Tools is a collection of high-quality utilities that run entirely in your browser—
           no account, no uploads, no distractions.
         </p>
       </section>

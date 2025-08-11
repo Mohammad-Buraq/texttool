@@ -2,8 +2,8 @@
 import ContactForm from '@/components/ContactForm'
 
 export const metadata = {
-  title: 'Contact • TextTools AI',
-  description: 'Get in touch with the TextTools AI team.',
+  title: 'Contact • Text Tools',
+  description: 'Get in touch with the Text Tools team.',
 }
 
 export default function Contact(){
