@@ -33,10 +33,17 @@ export default function SiteFooter() {
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               
-              <a href="https://x.com/thetexttool" target="_blank" rel="noopener" aria-label="Twitter/X"
-                 className="inline-flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-900">
-                <Twitter className="w-4 h-4" /> Twitter
-              </a>
+              <a href="https://x.com/thetexttool"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Follow us on X"
+                    className="inline-flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 1200 1227" fill="currentColor" role="img" aria-hidden="true">
+                        <path d="M714.163 519.284 1160.89 0h-108.67L661.335 444.76 388.69 0H0l466.993 729.863L0 1226.7h108.669l415.89-466.88 289.022 466.88H1200L714.163 519.284Zm-147.77 165.688-48.35-74.618L147.781 80h166.739l229.498 355.55 48.35 74.618 384.262 596.883H809.891L566.393 684.972Z"/>
+                    </svg>
+                    X
+               </a>
+
               <a href="/contact" aria-label="Contact"
                  className="inline-flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-800 px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-900">
                 <MessageSquare className="w-4 h-4" /> Contact
