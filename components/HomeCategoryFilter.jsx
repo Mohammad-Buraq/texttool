@@ -126,7 +126,7 @@ export default function HomeCategoryFilter({
       </div>
 
       {/* Horizontal slider (few, top categories) */}
-      <div className="relative">
+      <div className="relative hidden sm:block">
         <div className="flex items-center gap-2">
           <button onClick={()=>scrollBy(-360)} className="rounded-lg border border-gray-200 dark:border-gray-800 p-2 hover:bg-gray-50 dark:hover:bg-gray-900" aria-label="Scroll categories left">
             <ChevronLeft className="w-5 h-5" />
