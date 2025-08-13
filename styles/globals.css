@@ -20,5 +20,6 @@ body { @apply bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-50; }
 .prose ul { margin-top: .5rem; }
 .prose ol { margin-top: .5rem; }
 
+
 kbd { @apply px-1.5 py-0.5 rounded border text-xs border-gray-300 dark:border-gray-700; }
 
