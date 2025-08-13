@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="120" viewBox="0 0 680 120">
+  <defs>
+    <style>
+      .wb{font: 900 72px 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill:#0a121e}
+    </style>
+  </defs>
+  <rect x="0" y="12" width="96" height="96" rx="20" fill="#2563EB"/>
+  <text x="48" y="85" text-anchor="middle" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="64" font-weight="800" fill="#fff">T</text>
+  <text x="120" y="86" class="wb">TheTextTool</text>
+</svg>

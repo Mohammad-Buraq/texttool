@@ -7,9 +7,17 @@ export const metadata = {
 };
 
 import "@/styles/globals.css";
-import { Suspense } from "react"; // ← add this
+import { Suspense } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import Analytics from "@/components/Analytics";
+import BrandLogo from "@/components/BrandLogo";
+import SiteFooter from '@/components/SiteFooter'   // ⬅ add at top with other imports
+
+
+
+// ✅ Import Inter font just for header links
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"], weight: ["700", "800"] });
 
 export default function RootLayout({ children }) {
   return (
@@ -21,46 +29,29 @@ export default function RootLayout({ children }) {
           }}
         />
         <Suspense fallback={null}>
+          {/* ===== HEADER ===== */}
           <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-              <a href="/" className="text-xl font-extrabold text-blue-600">
-                Text Tools
-              </a>
-              <nav className="flex items-center gap-4 text-sm">
+              {/* Brand Logo */}
+              <BrandLogo href="/" size={28} />
+
+              {/* Nav links with Inter font */}
+              <nav className={`flex items-center gap-4 text-sm ${inter.className}`}>
                 <a className="hover:underline" href="/categories">Categories</a>
-                <a className="hover:underline" href="/about">
-                  About
-                </a>
-                <a className="hover:underline" href="/contact">
-                  Contact
-                </a>
+                <a className="hover:underline" href="/about">About</a>
+                <a className="hover:underline" href="/contact">Contact</a>
                 <ThemeToggle />
               </nav>
             </div>
           </header>
 
+          {/* ===== MAIN ===== */}
           <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
             {children}
           </main>
 
-          <footer className="border-t border-gray-200 dark:border-gray-800 mt-10">
-            <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 text-sm text-gray-600 dark:text-gray-400 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
-              <div>
-                © {new Date().getFullYear()} Text Tools — Privacy-first.
-              </div>
-              <nav className="flex gap-4">
-                <a href="/about" className="hover:underline">
-                  About
-                </a>
-                <a href="/contact" className="hover:underline">
-                  Contact
-                </a>
-                <a href="/sitemap.xml" className="hover:underline">
-                  Sitemap
-                </a>
-              </nav>
-            </div>
-          </footer>
+          {/* ===== FOOTER ===== */}
+          <SiteFooter />
 
           <Analytics />
         </Suspense>

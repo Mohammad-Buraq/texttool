@@ -21,7 +21,7 @@ export default function Home() {
       {/* Hero */}
       <section className="text-center space-y-4">
         <h1 className="text-4xl md:text-5xl font-extrabold">
-          Text Tools — crisp, private, blazing fast
+          Free, Fast and 600+ Private Text Tools
         </h1>
         <p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
           Powerful in-browser tools for writers, students, devs, and creators.
