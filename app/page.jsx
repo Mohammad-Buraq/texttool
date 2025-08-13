@@ -2,6 +2,10 @@ import { getAllTools } from "@/data/tools";
 import Link from "next/link";
 import { Suspense } from "react";
 import SearchBar from "@/components/SearchBar";
+import CategoryGrid from "@/components/CategoryGrid";
+import HomeCategoryFilter from '@/components/HomeCategoryFilter';
+
+
 
 export const metadata = {
   title: "Free Text Tools — Fast, Private, In-Browser",
@@ -30,29 +34,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tools grid */}
-      <section>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tools.map((t) => {
-            const Icon = t.Icon;
-            return (
-              <Link
-                key={t.slug}
-                href={`/tools/${t.slug}`}
-                className="card block hover:shadow-md transition"
-              >
-                <div className="flex items-center gap-3">
-                  {Icon ? <Icon className="w-5 h-5 text-blue-600" /> : null}
-                  <div className="font-semibold">{t.name}</div>
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                  {t.description}
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
+      <HomeCategoryFilter initialVisible={6} />
+
+      
 
       {/* Long description (SEO) */}
       {/* SEO band – matches tools grid width */}

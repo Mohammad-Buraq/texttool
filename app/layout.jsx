@@ -24,9 +24,10 @@ export default function RootLayout({ children }) {
           <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
               <a href="/" className="text-xl font-extrabold text-blue-600">
-                TextTools AI
+                Text Tools
               </a>
               <nav className="flex items-center gap-4 text-sm">
+                <a className="hover:underline" href="/categories">Categories</a>
                 <a className="hover:underline" href="/about">
                   About
                 </a>
