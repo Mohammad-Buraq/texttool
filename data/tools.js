@@ -1,15 +1,15 @@
-/* Registry for 50 working tools with SEO + Long descriptions + Consistent FAQs */
+/* Registry for 100 tools with SEO + Tool‑specific long descriptions */
 import dynamic from 'next/dynamic';
 import {
-  ListOrdered,
-  Filter,
-  CaseUpper,
-  CaseLower,
-  Type,
-  Link,
-  Sigma,
   Braces,
+  CaseLower,
+  CaseUpper,
+  Filter,
+  Link,
+  ListOrdered,
+  Sigma,
   TextQuote,
+  Type,
   Wand2
 } from 'lucide-react';
 
@@ -24,919 +24,1127 @@ const addFaqs = (name, extras = []) => ([
   ...extras
 ]);
 
-const R = ({
-  slug, name, description, component, tags = [], Icon = Wand2,
-  seoTitle, seoDescription, Long, faqs
-}) => ({
-  slug, name, description, tags, Icon,
-  component,
-  seoTitle, seoDescription,
-  Long,
-  faqs: faqs && faqs.length ? faqs : defaultFaqs(name),
+const R = ({ slug, name, description, component, tags = [], Icon = Wand2, seoTitle, seoDescription, Long, faqs }) => ({ 
+  slug, name, description, tags, Icon, component, seoTitle, seoDescription, Long, faqs: faqs && faqs.length ? faqs : defaultFaqs(name)
 });
 
-/* ----------------- Long description components (existing 20) ----------------- */
-function Long_RemoveDuplicateLines(){
-  return (
-    <>
-      <h2>About Remove Duplicate Lines</h2>
-      <p>Quickly deduplicate lines while keeping your formatting intact. Works fully in your browser—no uploads.</p>
-      <h3>Key features</h3>
-      <ul>
-        <li><strong>Keep first or last</strong> duplicate</li>
-        <li>Case sensitivity toggle</li>
-        <li>Instant results for large texts</li>
-      </ul>
-      <h3>How to use</h3>
-      <ol><li>Paste text</li><li>Choose first/last + case option</li><li>Copy or download result</li></ol>
-      <h3>Common uses</h3>
-      <ul><li>Clean email/URL lists</li><li>Process logs</li><li>Prep CSV-like data</li></ul>
-    </>
-  );
-}
-function Long_RemoveEmptyLines(){
-  return (
-    <>
-      <h2>About Remove Empty Lines</h2>
-      <p>Delete blank or whitespace-only lines to make your text compact and easier to scan.</p>
-      <h3>How it helps</h3>
-      <ul><li>Normalize pasted content</li><li>Pre-process before sorting or deduping</li></ul>
-      <h3>Steps</h3>
-      <ol><li>Paste text</li><li>Click remove</li><li>Copy or download</li></ol>
-    </>
-  );
-}
-function Long_SortLines(){
-  return (
-    <>
-      <h2>About Sort Lines</h2>
-      <p>Sort lines alphabetically with optional case sensitivity and Z→A reverse.</p>
-      <h3>Tips</h3>
-      <ul><li>Sort then dedupe for tidy lists</li><li>Use case-insensitive for mixed case data</li></ul>
-    </>
-  );
-}
-function Long_AddLineNumbers(){
-  return (
-    <>
-      <h2>About Add Line Numbers</h2>
-      <p>Prefix each line with a padded number—great for code reviews, transcripts, and lists.</p>
-      <h3>Usage</h3>
-      <ol><li>Paste text</li><li>Choose padding</li><li>Copy/download</li></ol>
-    </>
-  );
-}
-function Long_Uppercase(){ return (<><h2>About Uppercase</h2><p>Convert text to UPPERCASE for headings, labels, or emphasis. Unicode-aware.</p></>); }
-function Long_Lowercase(){ return (<><h2>About Lowercase</h2><p>Convert text to lowercase for normalization and comparisons. Works on large inputs.</p></>); }
-function Long_TitleCase(){
-  return (
-    <>
-      <h2>About Title Case</h2>
-      <p>Smart title casing that avoids capitalizing small words mid-title (like “and”, “of”).</p>
-      <h3>Use cases</h3>
-      <ul><li>Article/book titles</li><li>Headings</li></ul>
-    </>
-  );
-}
-function Long_SentenceCase(){
-  return (
-    <>
-      <h2>About Sentence Case</h2>
-      <p>Capitalize the first letter of each sentence while keeping other text lowercased.</p>
-      <h3>Good for</h3>
-      <ul><li>Docs clean-up</li><li>Chat exports</li></ul>
-    </>
-  );
-}
-function Long_Slugify(){
-  return (
-    <>
-      <h2>About Slugify</h2>
-      <p>Create clean, URL-friendly slugs by removing accents and symbols, then lowercasing.</p>
-      <h3>Examples</h3>
-      <ul><li>“Café del Mar 2025” → <code>cafe-del-mar-2025</code></li></ul>
-    </>
-  );
-}
-function Long_RemovePunctuation(){
-  return (
-    <>
-      <h2>About Remove Punctuation</h2>
-      <p>Strip punctuation and symbols while keeping letters, digits, and spaces intact.</p>
-      <h3>When to use</h3>
-      <ul><li>Tokenization pre-processing</li><li>Clean noisy text</li></ul>
-    </>
-  );
-}
-function Long_RemoveNumbers(){
-  return (
-    <>
-      <h2>About Remove Numbers</h2>
-      <p>Delete digits from text, with an option to also remove numbers inside words.</p>
-      <h3>Use cases</h3>
-      <ul><li>Remove timestamps, IDs</li><li>Prep for textual analysis</li></ul>
-    </>
-  );
-}
-function Long_LineCounter(){
-  return (
-    <>
-      <h2>About Line Counter</h2>
-      <p>Count total and non-empty lines to understand text structure at a glance.</p>
-      <h3>Tip</h3>
-      <ul><li>Use before/after clean-ups to verify changes</li></ul>
-    </>
-  );
-}
-function Long_WordFrequency(){
-  return (
-    <>
-      <h2>About Word Frequency</h2>
-      <p>List words by frequency with an optional stopword filter. Great for quick keyword checks.</p>
-      <h3>Workflow</h3>
-      <ol><li>Paste text</li><li>Toggle stopwords</li><li>Export list</li></ol>
-    </>
-  );
-}
-function Long_UrlEncodeDecode(){
-  return (
-    <>
-      <h2>About URL Encode/Decode</h2>
-      <p>Safely percent-encode or decode query strings and parameters for web use.</p>
-      <h3>Examples</h3>
-      <ul><li><code>hello world</code> → <code>hello%20world</code></li></ul>
-    </>
-  );
-}
-function Long_Base64(){
-  return (
-    <>
-      <h2>About Base64 Encode/Decode</h2>
-      <p>Convert text to/from Base64 with full Unicode support (emoji, accents, etc.).</p>
-      <h3>Note</h3>
-      <ul><li>For binary files, use a dedicated file encoder (future tool)</li></ul>
-    </>
-  );
-}
-function Long_StripHtmlTags(){
-  return (
-    <>
-      <h2>About Strip HTML Tags</h2>
-      <p>Remove HTML tags from a snippet. Optionally convert links to “text (URL)”.</p>
-      <h3>Great for</h3>
-      <ul><li>Copying from CMS/editors</li><li>Turning HTML emails into plain text</li></ul>
-    </>
-  );
-}
-function Long_RemoveLineBreaks(){
-  return (
-    <>
-      <h2>About Remove Line Breaks</h2>
-      <p>Join lines with a custom separator (space, comma, etc.) to flatten paragraphs.</p>
-      <h3>Tip</h3>
-      <ul><li>Use a comma+space to build CSV-like strings quickly</li></ul>
-    </>
-  );
-}
-function Long_RemoveExtraSpaces(){
-  return (
-    <>
-      <h2>About Remove Extra Spaces</h2>
-      <p>Trim leading/trailing spaces and collapse multiple spaces into one.</p>
-      <h3>When to use</h3>
-      <ul><li>Normalize text before comparisons</li><li>Clean pasted content</li></ul>
-    </>
-  );
-}
-function Long_WrapUnwrapLines(){
-  return (
-    <>
-      <h2>About Wrap / Unwrap Lines</h2>
-      <p>Hard-wrap text to a column width or unwrap line breaks. Keep paragraph gaps, wrap at words, or use strict character wrapping—all in your browser.</p>
-      <h3>Common uses</h3>
-      <ul>
-        <li>Reflow prose for code reviews and diffs</li>
-        <li>Fix broken line-breaks from PDFs</li>
-        <li>Prepare text to match style guides</li>
-      </ul>
-      <h3>How to use</h3>
-      <ol><li>Paste text</li><li>Choose Wrap or Unwrap</li><li>Adjust width / options</li><li>Copy or Download</li></ol>
-    </>
-  );
-}
-function Long_WordCharSentenceParagraphCounter(){
-  return (
-    <>
-      <h2>About Word / Char / Sentence / Paragraph Counter</h2>
-      <p>Live statistics for your text with Unicode-aware word counting and a quick reading-time estimate.</p>
-      <h3>Shows</h3>
-      <ul>
-        <li>Words, characters (with/without spaces)</li>
-        <li>Sentences and paragraphs</li>
-        <li>Average word length and reading time</li>
-      </ul>
-    </>
-  );
-}
+/* ------- Long description factory (tool‑specific bullets supported) ------- */
+const makeLong = (name, summary, features = [], steps = ['Paste your text', 'Adjust options', 'Copy or download'], uses = []) => () => (
+  <>
+    <h2>{`About ${name}`}</h2>
+    <p>{summary}</p>
+    <h3>Key features</h3>
+    <ul>
+      {(features && features.length ? features : ['100% browser-based, privacy-first','Copy / Download / Clear toolbar','Handles multi‑MB inputs']).map((f,i)=>(<li key={i}>{f}</li>))}
+    </ul>
+    <h3>How to use</h3>
+    <ol>{steps.map((s,i)=>(<li key={i}>{s}</li>))}</ol>
+    <h3>Common uses</h3>
+    <ul>{(uses && uses.length ? uses : ['General text processing','Scripting workflows','Everyday editing']).map((u,i)=>(<li key={i}>{u}</li>))}</ul>
+  </>
+);
 
-/* ----------------- Long description components (new 30) ----------------- */
-function Long_ReverseText(){ return (<><h2>About Reverse Text</h2><p>Reverse the entire string character-by-character. Useful for quick checks, palindromes, and playful effects.</p></>); }
-function Long_ReverseLines(){ return (<><h2>About Reverse Lines</h2><p>Flip the order of lines without touching line contents. Handy for logs and lists.</p></>); }
-function Long_ShuffleLines(){ return (<><h2>About Shuffle Lines</h2><p>Randomize line order using a Fisher–Yates shuffle for unbiased results.</p></>); }
-function Long_RandomLinePicker(){ return (<><h2>About Random Line Picker</h2><p>Pick one or more random lines from your list without repetition.</p></>); }
-function Long_DedentText(){ return (<><h2>About Dedent Text</h2><p>Remove the smallest common indentation across all lines—great for pasted code.</p></>); }
-function Long_IndentText(){ return (<><h2>About Indent Text</h2><p>Add tabs or spaces to the start of each line to match style or improve readability.</p></>); }
-function Long_PrefixLines(){ return (<><h2>About Prefix Lines</h2><p>Prepend a custom string to each line—add quotes, bullets, or Markdown syntax in bulk.</p></>); }
-function Long_SuffixLines(){ return (<><h2>About Suffix Lines</h2><p>Append a custom string to every line—useful for quickly adding punctuation or markers.</p></>); }
-function Long_TrimWhitespace(){ return (<><h2>About Trim Whitespace</h2><p>Strip leading and trailing whitespace from the entire text.</p></>); }
-function Long_TrimEachLine(){ return (<><h2>About Trim Each Line</h2><p>Trim spaces from the start and end of every line—clean ragged pastes.</p></>); }
-function Long_RemoveDuplicateWords(){ return (<><h2>About Remove Duplicate Words</h2><p>Remove repeated words while keeping the first occurrence.</p></>); }
-function Long_UniqueWords(){ return (<><h2>About Unique Words</h2><p>Extract, lowercase, and sort unique words to see your vocabulary at a glance.</p></>); }
-function Long_SortUniqueLines(){ return (<><h2>About Sort Unique Lines</h2><p>Combine “dedupe lines” and “sort lines” in one step.</p></>); }
-function Long_SortWords(){ return (<><h2>About Sort Words</h2><p>Alphabetize all detected words for quick comparison or lexicon prep.</p></>); }
-function Long_ExtractUrls(){ return (<><h2>About Extract URLs</h2><p>Find and deduplicate HTTP/HTTPS links from any snippet for quick auditing.</p></>); }
-function Long_ExtractEmails(){ return (<><h2>About Extract Emails</h2><p>Extract and deduplicate email addresses with a pragmatic pattern.</p></>); }
-function Long_ExtractNumbers(){ return (<><h2>About Extract Numbers</h2><p>Pull out integers, decimals, and negatives—perfect for scraping numeric data.</p></>); }
-function Long_ExtractHashtags(){ return (<><h2>About Extract Hashtags</h2><p>Collect unique hashtags (Unicode-aware) from social posts or notes.</p></>); }
-function Long_FindAndReplace(){ return (<><h2>About Find &amp; Replace</h2><p>Search for a substring and replace it—optionally case-insensitive and replace-all.</p></>); }
-function Long_RegexReplace(){ return (<><h2>About Regex Replace</h2><p>Run a JavaScript regular expression search/replace—powerful batch text edits.</p></>); }
-function Long_Rot13(){ return (<><h2>About ROT13</h2><p>Apply the classic ROT13 substitution cipher for quick obfuscation.</p></>); }
-function Long_CaesarCipher(){ return (<><h2>About Caesar Cipher</h2><p>Shift letters by a configurable amount (N). Educational and handy for puzzles.</p></>); }
-function Long_MorseCodeEncodeDecode(){ return (<><h2>About Morse Code</h2><p>Convert text to Morse and back for basic Latin letters and digits.</p></>); }
-function Long_CsvToJson(){ return (<><h2>About CSV → JSON</h2><p>Turn simple CSV (no quoted commas) into a JSON array for quick prototyping.</p></>); }
-function Long_JsonToCsv(){ return (<><h2>About JSON → CSV</h2><p>Flatten a JSON array of objects into a CSV table with headers.</p></>); }
-function Long_MarkdownToHtml(){ return (<><h2>About Markdown → HTML</h2><p>Convert basic Markdown features into HTML without a server roundtrip.</p></>); }
-function Long_HtmlToMarkdown(){ return (<><h2>About HTML → Markdown</h2><p>Simplify HTML into Markdown equivalents for portability.</p></>); }
-function Long_RemoveDuplicateParagraphs(){ return (<><h2>About Remove Duplicate Paragraphs</h2><p>Dedupe repeated paragraphs while preserving spacing between blocks.</p></>); }
-function Long_InvertCase(){ return (<><h2>About Invert Case</h2><p>Swap UPPER↔lower case for each letter—great for stylistic toggles.</p></>); }
-function Long_ChunkText(){ return (<><h2>About Chunk Text</h2><p>Split long text into fixed-size chunks for uploads, SMS, or batching.</p></>); }
-
-/* ----------------- Registry (50 tools) ----------------- */
+/* ----------------- Registry (100 tools) ----------------- */
 const registry = [
-  /* ---------- Original 20 with consistent FAQs ---------- */
   R({
     slug: 'remove-duplicate-lines',
     name: 'Remove Duplicate Lines',
     description: 'Dedupe lines (keep first/last, case sensitivity).',
-    component: dynamic(() => import('../components/tools/remove-duplicate-lines.jsx')),
-    tags: ['clean','lines','dedupe'],
+    component: dynamic(() => import('../components/tools/remove-duplicate-lines')),
+    tags: ["clean", "lines", "dedupe"],
     Icon: ListOrdered,
-    seoTitle: 'Remove Duplicate Lines — Fast, Free, Privacy-First',
-    seoDescription: 'Instantly remove duplicate lines. Keep first or last, with case sensitivity. 100% browser-based.',
-    Long: Long_RemoveDuplicateLines,
-    faqs: addFaqs('Remove Duplicate Lines', [
-      { q: 'Does order change when deduping?', a: 'You can choose to keep the first or last occurrence. The rest are removed while preserving the chosen item’s position.' },
-      { q: 'How big can my input be?', a: 'It runs in your browser; practical limits depend on your device and memory (multi-MB is usually fine).' },
-    ]),
+    seoTitle: 'Remove Duplicate Lines — Online',
+    seoDescription: 'Dedupe lines (keep first/last, case sensitivity). Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Duplicate Lines','Dedupe lines (keep first/last, case sensitivity).', ["Keep first or last duplicate", "Case-sensitive toggle", "Stable ordering for kept items"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
     slug: 'remove-empty-lines',
     name: 'Remove Empty Lines',
     description: 'Delete blank/whitespace-only lines.',
-    component: dynamic(() => import('../components/tools/remove-empty-lines.jsx')),
-    tags: ['clean','lines'],
+    component: dynamic(() => import('../components/tools/remove-empty-lines')),
+    tags: ["clean", "lines"],
     Icon: Filter,
-    seoTitle: 'Remove Empty Lines — Clean Blank Lines Online',
-    seoDescription: 'Delete blank or whitespace-only lines instantly. Free, private, and in-browser.',
-    Long: Long_RemoveEmptyLines,
-    faqs: addFaqs('Remove Empty Lines', [
-      { q: 'Does it remove whitespace-only lines?', a: 'Yes. Lines with only spaces or tabs are removed.' },
-      { q: 'Will it affect non-breaking spaces?', a: 'Only standard whitespace is targeted; unusual spacing characters are preserved unless trimmed by the browser.' },
-    ]),
+    seoTitle: 'Remove Empty Lines — Online',
+    seoDescription: 'Delete blank/whitespace-only lines. Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Empty Lines','Delete blank/whitespace-only lines.', ["Removes blank & whitespace-only lines", "Keeps original line order", "Handles LF/CRLF line endings"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
     slug: 'sort-lines',
     name: 'Sort Lines',
     description: 'Sort lines A→Z / Z→A; case sensitivity toggle.',
-    component: dynamic(() => import('../components/tools/sort-lines.jsx')),
-    tags: ['lines','sort'],
+    component: dynamic(() => import('../components/tools/sort-lines')),
+    tags: ["lines", "sort"],
     Icon: ListOrdered,
-    seoTitle: 'Sort Lines — A→Z / Z→A, Case-Sensitive',
-    seoDescription: 'Sort lines alphabetically with optional case sensitivity and reverse order.',
-    Long: Long_SortLines,
-    faqs: addFaqs('Sort Lines', [
-      { q: 'Is sorting stable?', a: 'Yes—equal items keep their relative order. Use case-insensitive mode for mixed-case data.' },
-      { q: 'Does it do natural sort?', a: 'Sorting uses localeCompare; numbers within strings sort lexically, not numerically.' },
-    ]),
+    seoTitle: 'Sort Lines — Online',
+    seoDescription: 'Sort lines A→Z / Z→A; case sensitivity toggle. Runs fully in your browser — free and private.',
+    Long: makeLong('Sort Lines','Sort lines A→Z / Z→A; case sensitivity toggle.', ["A\u2192Z or Z\u2192A ordering", "Optionally case-insensitive", "Locale-aware compare"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
     slug: 'add-line-numbers',
     name: 'Add Line Numbers',
     description: 'Prefix lines with padded numbering.',
-    component: dynamic(() => import('../components/tools/add-line-numbers.jsx')),
-    tags: ['lines','format'],
+    component: dynamic(() => import('../components/tools/add-line-numbers')),
+    tags: ["lines", "format"],
     Icon: ListOrdered,
-    seoTitle: 'Add Line Numbers — Number Each Line',
-    seoDescription: 'Prefix lines with padded numbering for code, lists, and transcripts.',
-    Long: Long_AddLineNumbers,
-    faqs: addFaqs('Add Line Numbers', [
-      { q: 'Can I change padding?', a: 'Yes—choose zero-padding width, start number, and separator.' },
-      { q: 'Will it renumber empty lines?', a: 'Yes; numbering is applied line-by-line as-is.' },
-    ]),
+    seoTitle: 'Add Line Numbers — Online',
+    seoDescription: 'Prefix lines with padded numbering. Runs fully in your browser — free and private.',
+    Long: makeLong('Add Line Numbers','Prefix lines with padded numbering.', ["Add custom prefix/suffix", "Works with blank lines too", "No changes inside line text"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
     slug: 'uppercase',
     name: 'Uppercase',
     description: 'Convert text to UPPERCASE.',
-    component: dynamic(() => import('../components/tools/uppercase.jsx')),
-    tags: ['case'],
+    component: dynamic(() => import('../components/tools/uppercase')),
+    tags: ["case"],
     Icon: CaseUpper,
-    seoTitle: 'Uppercase Converter — UPPERCASE Text',
-    seoDescription: 'Convert any text to uppercase instantly. Free, private, in-browser.',
-    Long: Long_Uppercase,
-    faqs: addFaqs('Uppercase', [
-      { q: 'Is it Unicode-aware?', a: 'Yes—works with most scripts supported by the browser.' },
-      { q: 'Does it change spacing or punctuation?', a: 'No—only letter case changes.' },
-    ]),
+    seoTitle: 'Uppercase — Online',
+    seoDescription: 'Convert text to UPPERCASE. Runs fully in your browser — free and private.',
+    Long: makeLong('Uppercase','Convert text to UPPERCASE.', ["Unicode-aware case conversion", "Leaves numbers & symbols unchanged", "Fast for multi\u2011MB inputs"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
   }),
   R({
     slug: 'lowercase',
     name: 'Lowercase',
     description: 'Convert text to lowercase.',
-    component: dynamic(() => import('../components/tools/lowercase.jsx')),
-    tags: ['case'],
+    component: dynamic(() => import('../components/tools/lowercase')),
+    tags: ["case"],
     Icon: CaseLower,
-    seoTitle: 'Lowercase Converter — lowercase text',
-    seoDescription: 'Convert any text to lowercase instantly. Free, private, in-browser.',
-    Long: Long_Lowercase,
-    faqs: addFaqs('Lowercase', [
-      { q: 'Is it Unicode-aware?', a: 'Yes—works with most scripts supported by the browser.' },
-      { q: 'Does it alter numbers or symbols?', a: 'No—only letters are affected.' },
-    ]),
+    seoTitle: 'Lowercase — Online',
+    seoDescription: 'Convert text to lowercase. Runs fully in your browser — free and private.',
+    Long: makeLong('Lowercase','Convert text to lowercase.', ["Unicode-aware case conversion", "Leaves numbers & symbols unchanged", "Fast for multi\u2011MB inputs"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
   }),
-
-  // Batch A (12)
   R({
     slug: 'title-case',
     name: 'Title Case',
     description: 'Smart title casing with small-word handling.',
-    component: dynamic(() => import('../components/tools/title-case.jsx')),
-    tags: ['case'],
+    component: dynamic(() => import('../components/tools/title-case')),
+    tags: ["case"],
     Icon: Type,
-    seoTitle: 'Title Case Converter — Smart Title Casing',
-    seoDescription: 'Convert text to title case while skipping small words in the middle.',
-    Long: Long_TitleCase,
-    faqs: addFaqs('Title Case', [
-      { q: 'Which small words are skipped?', a: 'Common short words like “and”, “of”, “the” in mid-title. First/last words are capitalized.' },
-      { q: 'Locale support?', a: 'General English conventions; results for other languages may vary.' },
-    ]),
+    seoTitle: 'Title Case — Online',
+    seoDescription: 'Smart title casing with small-word handling. Runs fully in your browser — free and private.',
+    Long: makeLong('Title Case','Smart title casing with small-word handling.', ["Skips small words mid-title", "Always capitalizes first/last", "Preserves existing acronyms"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
   }),
   R({
     slug: 'sentence-case',
     name: 'Sentence Case',
     description: 'Capitalize the first letter of sentences.',
-    component: dynamic(() => import('../components/tools/sentence-case.jsx')),
-    tags: ['case'],
+    component: dynamic(() => import('../components/tools/sentence-case')),
+    tags: ["case"],
     Icon: Type,
-    seoTitle: 'Sentence Case Converter — Capitalize Sentences',
-    seoDescription: 'Capitalize the first letter of sentences. Great for cleaning pasted text.',
-    Long: Long_SentenceCase,
-    faqs: addFaqs('Sentence Case', [
-      { q: 'How are sentences detected?', a: 'Basic punctuation heuristics (.?!). Complex edge-cases may need manual tweaks.' },
-      { q: 'Acronyms and proper nouns?', a: 'They remain as typed unless the first letter is changed by sentence start.' },
-    ]),
+    seoTitle: 'Sentence Case — Online',
+    seoDescription: 'Capitalize the first letter of sentences. Runs fully in your browser — free and private.',
+    Long: makeLong('Sentence Case','Capitalize the first letter of sentences.', ["Detects . ? ! boundaries", "Leaves non-leading words lowercased", "Respects abbreviations in common cases"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
   }),
   R({
     slug: 'slugify',
     name: 'Slugify',
     description: 'Create clean URL slugs from text.',
-    component: dynamic(() => import('../components/tools/slugify.jsx')),
-    tags: ['case','slug'],
+    component: dynamic(() => import('../components/tools/slugify')),
+    tags: ["case", "slug"],
     Icon: Link,
-    seoTitle: 'Slugify — Clean URL Slug Generator',
-    seoDescription: 'Turn titles into clean, URL-friendly slugs. Removes accents and symbols.',
-    Long: Long_Slugify,
-    faqs: addFaqs('Slugify', [
-      { q: 'Does it remove accents?', a: 'Yes—accents and diacritics are stripped when possible.' },
-      { q: 'Spaces and punctuation?', a: 'Spaces become dashes; many symbols are removed.' },
-    ]),
+    seoTitle: 'Slugify — Online',
+    seoDescription: 'Create clean URL slugs from text. Runs fully in your browser — free and private.',
+    Long: makeLong('Slugify','Create clean URL slugs from text.', ["Removes accents & symbols", "Converts spaces to dashes", "Lowercase, URL-safe output"], ['Paste your text','Adjust options','Copy or download'], ["URLs & SEO", "File names", "Permalinks"]),
   }),
   R({
     slug: 'remove-punctuation',
     name: 'Remove Punctuation',
     description: 'Strip punctuation and symbols safely.',
-    component: dynamic(() => import('../components/tools/remove-punctuation.jsx')),
-    tags: ['clean'],
+    component: dynamic(() => import('../components/tools/remove-punctuation')),
+    tags: ["clean"],
     Icon: TextQuote,
-    seoTitle: 'Remove Punctuation — Strip Symbols',
-    seoDescription: 'Remove punctuation and symbols from text instantly. Free and private.',
-    Long: Long_RemovePunctuation,
-    faqs: addFaqs('Remove Punctuation', [
-      { q: 'Will numbers and letters remain?', a: 'Yes—letters, digits, and spaces are preserved.' },
-      { q: 'What about emojis?', a: 'Emojis are symbols and may be removed.' },
-    ]),
+    seoTitle: 'Remove Punctuation — Online',
+    seoDescription: 'Strip punctuation and symbols safely. Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Punctuation','Strip punctuation and symbols safely.', ["Removes punctuation safely", "Keeps letters, digits & spaces", "Configurable characters to keep"], ['Paste your text','Adjust options','Copy or download'], ["Preprocessing for analysis", "Removing noise", "Export to plain text"]),
   }),
   R({
     slug: 'remove-numbers',
     name: 'Remove Numbers',
     description: 'Delete digits (option to keep digits inside words).',
-    component: dynamic(() => import('../components/tools/remove-numbers.jsx')),
-    tags: ['clean'],
+    component: dynamic(() => import('../components/tools/remove-numbers')),
+    tags: ["clean"],
     Icon: Filter,
-    seoTitle: 'Remove Numbers — Delete Digits from Text',
-    seoDescription: 'Strip digits from text with an option to remove numbers inside words.',
-    Long: Long_RemoveNumbers,
-    faqs: addFaqs('Remove Numbers', [
-      { q: 'Does it remove decimals and negatives?', a: 'Yes—digits in any position are removed when enabled.' },
-      { q: 'Affects IDs and timestamps?', a: 'Yes—use with care if you need those preserved.' },
-    ]),
+    seoTitle: 'Remove Numbers — Online',
+    seoDescription: 'Delete digits (option to keep digits inside words). Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Numbers','Delete digits (option to keep digits inside words).', ["Removes punctuation safely", "Keeps letters, digits & spaces", "Configurable characters to keep"], ['Paste your text','Adjust options','Copy or download'], ["Preprocessing for analysis", "Removing noise", "Export to plain text"]),
   }),
   R({
     slug: 'line-counter',
     name: 'Line Counter',
     description: 'Count total and non-empty lines.',
-    component: dynamic(() => import('../components/tools/line-counter.jsx')),
-    tags: ['count','lines'],
+    component: dynamic(() => import('../components/tools/line-counter')),
+    tags: ["count", "lines"],
     Icon: Sigma,
-    seoTitle: 'Line Counter — Count Lines Online',
-    seoDescription: 'Count total and non-empty lines. Perfect for logs and lists.',
-    Long: Long_LineCounter,
-    faqs: addFaqs('Line Counter', [
-      { q: 'What is a non-empty line?', a: 'Any line with at least one non-whitespace character.' },
-      { q: 'Different newline styles?', a: 'Handles LF and CRLF automatically.' },
-    ]),
+    seoTitle: 'Line Counter — Online',
+    seoDescription: 'Count total and non-empty lines. Runs fully in your browser — free and private.',
+    Long: makeLong('Line Counter','Count total and non-empty lines.', ["Counts total & non-empty lines", "Handles CRLF & LF automatically", "Great for logs & transcripts"], ['Paste your text','Adjust options','Copy or download'], ["Editorial estimates", "Analytics prep", "QA checks"]),
   }),
   R({
     slug: 'word-frequency',
     name: 'Word Frequency',
     description: 'List words by frequency; stopwords toggle.',
-    component: dynamic(() => import('../components/tools/word-frequency.jsx')),
-    tags: ['count','analyze'],
+    component: dynamic(() => import('../components/tools/word-frequency')),
+    tags: ["count", "analyze"],
     Icon: Sigma,
-    seoTitle: 'Word Frequency Counter — Top Words',
-    seoDescription: 'See most frequent words with optional stopword removal.',
-    Long: Long_WordFrequency,
-    faqs: addFaqs('Word Frequency', [
-      { q: 'Are words normalized?', a: 'Yes—lowercased; punctuation stripped. You can toggle stopwords.' },
-      { q: 'Can I export the list?', a: 'Yes—copy to clipboard or download the output.' },
-    ]),
+    seoTitle: 'Word Frequency — Online',
+    seoDescription: 'List words by frequency; stopwords toggle. Runs fully in your browser — free and private.',
+    Long: makeLong('Word Frequency','List words by frequency; stopwords toggle.', ["Lowercases & tokenizes words", "Optional stopword removal", "Sorted by frequency"], ['Paste your text','Adjust options','Copy or download'], ["Editorial estimates", "Analytics prep", "QA checks"]),
   }),
   R({
     slug: 'url-encode-decode',
     name: 'URL Encode/Decode',
     description: 'Encode or decode URL strings safely.',
-    component: dynamic(() => import('../components/tools/url-encode-decode.jsx')),
-    tags: ['encode'],
+    component: dynamic(() => import('../components/tools/url-encode-decode')),
+    tags: ["encode"],
     Icon: Link,
-    seoTitle: 'URL Encode / Decode — Online',
-    seoDescription: 'Percent-encode or decode URLs and query strings safely in your browser.',
-    Long: Long_UrlEncodeDecode,
-    faqs: addFaqs('URL Encode/Decode', [
-      { q: 'Spaces use + or %20?', a: 'We use standard percent-encoding (%20). Some forms also accept + for spaces.' },
-      { q: 'Will it double-encode?', a: 'No—it decodes before encoding when needed to avoid double-encoding.' },
-    ]),
+    seoTitle: 'URL Encode/Decode — Online',
+    seoDescription: 'Encode or decode URL strings safely. Runs fully in your browser — free and private.',
+    Long: makeLong('URL Encode/Decode','Encode or decode URL strings safely.', ["Percent-encode spaces & symbols", "Decode to original text", "Prevents double-encoding"], ['Paste your text','Adjust options','Copy or download'], ["Web-safe transport", "Embedding in configs", "Basic interoperability"]),
   }),
   R({
     slug: 'base64-encode-decode',
     name: 'Base64 Encode/Decode',
     description: 'Convert to/from Base64 (Unicode-safe).',
-    component: dynamic(() => import('../components/tools/base64-encode-decode.jsx')),
-    tags: ['encode'],
+    component: dynamic(() => import('../components/tools/base64-encode-decode')),
+    tags: ["encode"],
     Icon: Braces,
-    seoTitle: 'Base64 Encode / Decode — Unicode Safe',
-    seoDescription: 'Convert text to/from Base64 with Unicode support. Private and offline.',
-    Long: Long_Base64,
-    faqs: addFaqs('Base64 Encode/Decode', [
-      { q: 'Is this for binary files?', a: 'This tool targets text. For binary files, use a file-specific encoder/decoder.' },
-      { q: 'URL-safe Base64?', a: 'Not by default; you can replace +/ with -_ if needed.' },
-    ]),
+    seoTitle: 'Base64 Encode/Decode — Online',
+    seoDescription: 'Convert to/from Base64 (Unicode-safe). Runs fully in your browser — free and private.',
+    Long: makeLong('Base64 Encode/Decode','Convert to/from Base64 (Unicode-safe).', ["Encode/decode text safely", "Full Unicode support", "No server roundtrips"], ['Paste your text','Adjust options','Copy or download'], ["Web-safe transport", "Embedding in configs", "Basic interoperability"]),
   }),
   R({
     slug: 'strip-html-tags',
     name: 'Strip HTML Tags',
     description: 'Remove HTML tags; optional link conversion.',
-    component: dynamic(() => import('../components/tools/strip-html-tags.jsx')),
-    tags: ['clean','html'],
+    component: dynamic(() => import('../components/tools/strip-html-tags')),
+    tags: ["clean", "html"],
     Icon: Braces,
-    seoTitle: 'Strip HTML Tags — HTML to Plain Text',
-    seoDescription: 'Remove HTML tags and optionally convert links to “text (URL)”.',
-    Long: Long_StripHtmlTags,
-    faqs: addFaqs('Strip HTML Tags', [
-      { q: 'Does it keep link text?', a: 'Yes—optionally include the URL in parentheses.' },
-      { q: 'Removes scripts/styles?', a: 'Yes—tags are stripped; this is a simple sanitizer, not a full HTML parser.' },
-    ]),
+    seoTitle: 'Strip HTML Tags — Online',
+    seoDescription: 'Remove HTML tags; optional link conversion. Runs fully in your browser — free and private.',
+    Long: makeLong('Strip HTML Tags','Remove HTML tags; optional link conversion.', ["Strips tags & attributes", "Optional link as (text \u2014 URL)", "Basic sanitizer for snippets"], ['Paste your text','Adjust options','Copy or download'], ["CMS copy/paste", "Email to plain text", "Snippet cleanup"]),
   }),
   R({
     slug: 'remove-line-breaks',
     name: 'Remove Line Breaks',
     description: 'Join lines with a custom separator.',
-    component: dynamic(() => import('../components/tools/remove-line-breaks.jsx')),
-    tags: ['clean','lines'],
+    component: dynamic(() => import('../components/tools/remove-line-breaks')),
+    tags: ["clean", "lines"],
     Icon: Filter,
-    seoTitle: 'Remove Line Breaks — Join Lines',
-    seoDescription: 'Flatten text by joining lines with your own separator.',
-    Long: Long_RemoveLineBreaks,
-    faqs: addFaqs('Remove Line Breaks', [
-      { q: 'Keep paragraph gaps?', a: 'You can configure how to treat blank-line gaps before joining.' },
-      { q: 'CSV-friendly joining?', a: 'Use a comma+space as the separator for quick list building.' },
-    ]),
+    seoTitle: 'Remove Line Breaks — Online',
+    seoDescription: 'Join lines with a custom separator. Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Line Breaks','Join lines with a custom separator.', ["Join with any separator", "Preserve paragraph blank lines", "Great for list building"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
     slug: 'remove-extra-spaces',
     name: 'Remove Extra Spaces',
     description: 'Trim and collapse extra whitespace.',
-    component: dynamic(() => import('../components/tools/remove-extra-spaces.jsx')),
-    tags: ['clean','spaces'],
+    component: dynamic(() => import('../components/tools/remove-extra-spaces')),
+    tags: ["clean", "spaces"],
     Icon: Filter,
-    seoTitle: 'Remove Extra Spaces — Trim & Collapse',
-    seoDescription: 'Trim edges and collapse multiple spaces into one. Clean, consistent text.',
-    Long: Long_RemoveExtraSpaces,
-    faqs: addFaqs('Remove Extra Spaces', [
-      { q: 'Does it affect tabs/newlines?', a: 'No—this tool focuses on spaces unless configured otherwise.' },
-      { q: 'Will it change punctuation spacing?', a: 'It collapses runs of spaces; punctuation remains as-is.' },
-    ]),
+    seoTitle: 'Remove Extra Spaces — Online',
+    seoDescription: 'Trim and collapse extra whitespace. Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Extra Spaces','Trim and collapse extra whitespace.', ["Trim edges & collapse spaces", "Leaves tabs/newlines intact", "Normalizes pasted content"], ['Paste your text','Adjust options','Copy or download'], ["Normalize paste", "Before diffs", "CSV prep"]),
   }),
   R({
     slug: 'wrap-unwrap-lines',
     name: 'Wrap / Unwrap Lines',
     description: 'Wrap text to a width or unwrap line breaks. Keep paragraph gaps.',
-    component: dynamic(() => import('../components/tools/wrap-unwrap-lines.jsx')),
-    tags: ['lines','format','wrap','unwrap'],
+    component: dynamic(() => import('../components/tools/wrap-unwrap-lines')),
+    tags: ["lines", "format", "wrap", "unwrap"],
     Icon: ListOrdered,
-    seoTitle: 'Wrap / Unwrap Lines — Reflow or Flatten Text',
-    seoDescription: 'Hard-wrap text to a column width or unwrap line breaks. Word-aware wrapping, paragraph preservation, and strict character wrap.',
-    Long: Long_WrapUnwrapLines,
-    faqs: addFaqs('Wrap / Unwrap Lines', [
-      { q: 'Does it wrap at words or characters?', a: 'You can choose word-aware wrapping or strict character width.' },
-      { q: 'Paragraph handling?', a: 'Blank-line paragraph gaps are preserved when wrapping.' },
-    ]),
+    seoTitle: 'Wrap / Unwrap Lines — Online',
+    seoDescription: 'Wrap text to a width or unwrap line breaks. Keep paragraph gaps. Runs fully in your browser — free and private.',
+    Long: makeLong('Wrap / Unwrap Lines','Wrap text to a width or unwrap line breaks. Keep paragraph gaps.', ["Word-aware or strict width", "Preserves paragraph gaps", "Configurable column width"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
     slug: 'word-char-sentence-paragraph-counter',
     name: 'Word / Char / Sentence / Paragraph Counter',
     description: 'Live counts with reading time and averages.',
-    component: dynamic(() => import('../components/tools/word-char-sentence-paragraph-counter.jsx')),
-    tags: ['count','analyze','stats'],
+    component: dynamic(() => import('../components/tools/word-char-sentence-paragraph-counter')),
+    tags: ["count", "analyze", "stats"],
     Icon: Sigma,
-    seoTitle: 'Word, Character, Sentence & Paragraph Counter — Live Stats',
-    seoDescription: 'Count words, characters, sentences, and paragraphs with average word length and reading time. Unicode-aware and private.',
-    Long: Long_WordCharSentenceParagraphCounter,
-    faqs: addFaqs('Word / Char / Sentence / Paragraph Counter', [
-      { q: 'How accurate are sentence counts?', a: 'Heuristic based on punctuation; edge-cases (abbreviations) may vary.' },
-      { q: 'Reading-time estimate?', a: 'Uses a common baseline of ~200 words per minute.' },
-    ]),
+    seoTitle: 'Word / Char / Sentence / Paragraph Counter — Online',
+    seoDescription: 'Live counts with reading time and averages. Runs fully in your browser — free and private.',
+    Long: makeLong('Word / Char / Sentence / Paragraph Counter','Live counts with reading time and averages.', ["Words, chars, sentences, paragraphs", "Average word length", "Reading time estimate"], ['Paste your text','Adjust options','Copy or download'], ["Editorial estimates", "Analytics prep", "QA checks"]),
   }),
-
-  /* ---------- New tools (30) with consistent FAQs ---------- */
   R({
-    slug: 'reverse-text', name: 'Reverse Text',
+    slug: 'reverse-text',
+    name: 'Reverse Text',
     description: 'Reverse the full text string.',
-    component: dynamic(() => import('../components/tools/reverse-text.jsx')),
-    tags: ['transform'], Icon: Wand2,
-    seoTitle: 'Reverse Text — Online', seoDescription: 'Reverse any text string instantly in your browser.',
-    Long: Long_ReverseText,
-    faqs: addFaqs('Reverse Text', [
-      { q: 'Does it handle emoji and accents?', a: 'It reverses code units; most characters work, but some complex graphemes may render differently.' },
-      { q: 'Will it change spacing?', a: 'Only order is reversed; characters stay unchanged.' },
-    ]),
+    component: dynamic(() => import('../components/tools/reverse-text')),
+    tags: ["transform"],
+    Icon: Wand2,
+    seoTitle: 'Reverse Text — Online',
+    seoDescription: 'Reverse the full text string. Runs fully in your browser — free and private.',
+    Long: makeLong('Reverse Text','Reverse the full text string.', ["Reverse characters as-is", "Works with emoji & accents", "Keeps spacing unchanged"], ['Paste your text','Adjust options','Copy or download'], ["Fun/puzzles", "Quick checks", "String utilities"]),
   }),
   R({
-    slug: 'reverse-lines', name: 'Reverse Lines',
+    slug: 'reverse-lines',
+    name: 'Reverse Lines',
     description: 'Reverse the order of lines.',
-    component: dynamic(() => import('../components/tools/reverse-lines.jsx')),
-    tags: ['lines','transform'], Icon: ListOrdered,
-    seoTitle: 'Reverse Lines — Online', seoDescription: 'Reverse line order quickly, 100% browser-based.',
-    Long: Long_ReverseLines,
-    faqs: addFaqs('Reverse Lines', [
-      { q: 'Does each line’s content change?', a: 'No—only the order of lines is reversed.' },
-      { q: 'Handles large files?', a: 'Yes—memory-limited by your device/browser.' },
-    ]),
+    component: dynamic(() => import('../components/tools/reverse-lines')),
+    tags: ["lines", "transform"],
+    Icon: ListOrdered,
+    seoTitle: 'Reverse Lines — Online',
+    seoDescription: 'Reverse the order of lines. Runs fully in your browser — free and private.',
+    Long: makeLong('Reverse Lines','Reverse the order of lines.', ["Reverse only the order of lines", "Content of lines untouched", "Great for logs & lists"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
-    slug: 'shuffle-lines', name: 'Shuffle Lines',
+    slug: 'shuffle-lines',
+    name: 'Shuffle Lines',
     description: 'Randomize line order (Fisher–Yates).',
-    component: dynamic(() => import('../components/tools/shuffle-lines.jsx')),
-    tags: ['lines','randomize'], Icon: ListOrdered,
-    seoTitle: 'Shuffle Lines — Randomize Order', seoDescription: 'Randomize the order of lines using Fisher–Yates shuffle.',
-    Long: Long_ShuffleLines,
-    faqs: addFaqs('Shuffle Lines', [
-      { q: 'Is the shuffle unbiased?', a: 'Yes—Fisher–Yates produces a uniform random permutation.' },
-      { q: 'Repeatability?', a: 'Not seeded; refresh to reshuffle.' },
-    ]),
+    component: dynamic(() => import('../components/tools/shuffle-lines')),
+    tags: ["lines", "randomize"],
+    Icon: ListOrdered,
+    seoTitle: 'Shuffle Lines — Online',
+    seoDescription: 'Randomize line order (Fisher–Yates). Runs fully in your browser — free and private.',
+    Long: makeLong('Shuffle Lines','Randomize line order (Fisher–Yates).', ["Unbiased Fisher\u2013Yates shuffle", "No repetition when picking", "Deterministic with same seed (future option)"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
-    slug: 'random-line-picker', name: 'Random Line Picker',
+    slug: 'random-line-picker',
+    name: 'Random Line Picker',
     description: 'Pick one or more random lines.',
-    component: dynamic(() => import('../components/tools/random-line-picker.jsx')),
-    tags: ['lines','randomize','pick'], Icon: Wand2,
-    seoTitle: 'Random Line Picker — Choose Random Lines', seoDescription: 'Select random lines from a list without uploading your data.',
-    Long: Long_RandomLinePicker,
-    faqs: addFaqs('Random Line Picker', [
-      { q: 'Does it pick duplicates?', a: 'No—picks are without replacement for the requested count.' },
-      { q: 'Empty lines?', a: 'Blank lines are ignored when picking.' },
-    ]),
+    component: dynamic(() => import('../components/tools/random-line-picker')),
+    tags: ["lines", "randomize", "pick"],
+    Icon: Wand2,
+    seoTitle: 'Random Line Picker — Online',
+    seoDescription: 'Pick one or more random lines. Runs fully in your browser — free and private.',
+    Long: makeLong('Random Line Picker','Pick one or more random lines.', ["Unbiased Fisher\u2013Yates shuffle", "No repetition when picking", "Deterministic with same seed (future option)"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
-    slug: 'dedent-text', name: 'Dedent Text',
+    slug: 'dedent-text',
+    name: 'Dedent Text',
     description: 'Remove common leading indentation.',
-    component: dynamic(() => import('../components/tools/dedent-text.jsx')),
-    tags: ['indent','format'], Icon: ListOrdered,
-    seoTitle: 'Dedent Text — Remove Leading Indent', seoDescription: 'Strip shared indentation from code blocks or pasted text.',
-    Long: Long_DedentText,
-    faqs: addFaqs('Dedent Text', [
-      { q: 'Tabs vs spaces?', a: 'Common indentation is detected by leading whitespace length; mixed indentation may behave differently.' },
-      { q: 'Affects blank lines?', a: 'Blank lines are preserved but not counted for indent minimum.' },
-    ]),
+    component: dynamic(() => import('../components/tools/dedent-text')),
+    tags: ["indent", "format"],
+    Icon: ListOrdered,
+    seoTitle: 'Dedent Text — Online',
+    seoDescription: 'Remove common leading indentation. Runs fully in your browser — free and private.',
+    Long: makeLong('Dedent Text','Remove common leading indentation.', ["Add or remove leading spaces/tabs", "Consistent indentation width", "Ignores empty lines for min calc"], ['Paste your text','Adjust options','Copy or download'], ["Code snippets", "Markdown quoting", "Formatting"]),
   }),
   R({
-    slug: 'indent-text', name: 'Indent Text',
+    slug: 'indent-text',
+    name: 'Indent Text',
     description: 'Indent each line by spaces or tabs.',
-    component: dynamic(() => import('../components/tools/indent-text.jsx')),
-    tags: ['indent','format','lines'], Icon: ListOrdered,
-    seoTitle: 'Indent Text — Tabs or Spaces', seoDescription: 'Indent lines by a chosen width using spaces or tabs.',
-    Long: Long_IndentText,
-    faqs: addFaqs('Indent Text', [
-      { q: 'Can I choose tabs?', a: 'Yes—toggle tabs or spaces and set the width.' },
-      { q: 'Number of lines affected?', a: 'Every line in the input is indented equally.' },
-    ]),
+    component: dynamic(() => import('../components/tools/indent-text')),
+    tags: ["indent", "format", "lines"],
+    Icon: ListOrdered,
+    seoTitle: 'Indent Text — Online',
+    seoDescription: 'Indent each line by spaces or tabs. Runs fully in your browser — free and private.',
+    Long: makeLong('Indent Text','Indent each line by spaces or tabs.', ["Add or remove leading spaces/tabs", "Consistent indentation width", "Ignores empty lines for min calc"], ['Paste your text','Adjust options','Copy or download'], ["Code snippets", "Markdown quoting", "Formatting"]),
   }),
   R({
-    slug: 'prefix-lines', name: 'Prefix Lines',
+    slug: 'prefix-lines',
+    name: 'Prefix Lines',
     description: 'Add a prefix to each line.',
-    component: dynamic(() => import('../components/tools/prefix-lines.jsx')),
-    tags: ['lines','format'], Icon: ListOrdered,
-    seoTitle: 'Prefix Lines — Add Prefix', seoDescription: 'Quickly add a custom prefix to every line.',
-    Long: Long_PrefixLines,
-    faqs: addFaqs('Prefix Lines', [
-      { q: 'Supports multi-character prefixes?', a: 'Yes—any string is allowed.' },
-      { q: 'Affects blank lines?', a: 'Yes—prefix is added to blank lines too.' },
-    ]),
+    component: dynamic(() => import('../components/tools/prefix-lines')),
+    tags: ["lines", "format"],
+    Icon: ListOrdered,
+    seoTitle: 'Prefix Lines — Online',
+    seoDescription: 'Add a prefix to each line. Runs fully in your browser — free and private.',
+    Long: makeLong('Prefix Lines','Add a prefix to each line.', ["Add custom prefix/suffix", "Works with blank lines too", "No changes inside line text"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
-    slug: 'suffix-lines', name: 'Suffix Lines',
+    slug: 'suffix-lines',
+    name: 'Suffix Lines',
     description: 'Add a suffix to each line.',
-    component: dynamic(() => import('../components/tools/suffix-lines.jsx')),
-    tags: ['lines','format'], Icon: ListOrdered,
-    seoTitle: 'Suffix Lines — Add Suffix', seoDescription: 'Append a custom suffix to all lines in one click.',
-    Long: Long_SuffixLines,
-    faqs: addFaqs('Suffix Lines', [
-      { q: 'Add punctuation to every line?', a: 'Yes—append any string (e.g., semicolons, commas).' },
-      { q: 'Trailing spaces?', a: 'Your suffix is appended exactly as typed.' },
-    ]),
+    component: dynamic(() => import('../components/tools/suffix-lines')),
+    tags: ["lines", "format"],
+    Icon: ListOrdered,
+    seoTitle: 'Suffix Lines — Online',
+    seoDescription: 'Add a suffix to each line. Runs fully in your browser — free and private.',
+    Long: makeLong('Suffix Lines','Add a suffix to each line.', ["Add custom prefix/suffix", "Works with blank lines too", "No changes inside line text"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
-    slug: 'trim-whitespace', name: 'Trim Whitespace',
+    slug: 'trim-whitespace',
+    name: 'Trim Whitespace',
     description: 'Trim leading/trailing whitespace.',
-    component: dynamic(() => import('../components/tools/trim-whitespace.jsx')),
-    tags: ['clean','spaces'], Icon: Filter,
-    seoTitle: 'Trim Whitespace — Clean Text', seoDescription: 'Remove leading and trailing whitespace instantly.',
-    Long: Long_TrimWhitespace,
-    faqs: addFaqs('Trim Whitespace', [
-      { q: 'Does it change internal spacing?', a: 'No—only trims the edges of the whole text.' },
-      { q: 'CRLF vs LF?', a: 'Newlines are preserved as-is.' },
-    ]),
+    component: dynamic(() => import('../components/tools/trim-whitespace')),
+    tags: ["clean", "spaces"],
+    Icon: Filter,
+    seoTitle: 'Trim Whitespace — Online',
+    seoDescription: 'Trim leading/trailing whitespace. Runs fully in your browser — free and private.',
+    Long: makeLong('Trim Whitespace','Trim leading/trailing whitespace.', ["Trim edges & collapse spaces", "Leaves tabs/newlines intact", "Normalizes pasted content"], ['Paste your text','Adjust options','Copy or download'], ["Normalize paste", "Before diffs", "CSV prep"]),
   }),
   R({
-    slug: 'trim-each-line', name: 'Trim Each Line',
+    slug: 'trim-each-line',
+    name: 'Trim Each Line',
     description: 'Trim spaces from every line.',
-    component: dynamic(() => import('../components/tools/trim-each-line.jsx')),
-    tags: ['clean','lines','spaces'], Icon: Filter,
-    seoTitle: 'Trim Each Line — Remove Edge Spaces', seoDescription: 'Trim whitespace from the start and end of every line.',
-    Long: Long_TrimEachLine,
-    faqs: addFaqs('Trim Each Line', [
-      { q: 'Does it collapse inner spaces?', a: 'No—only leading/trailing spaces on each line are trimmed.' },
-      { q: 'Blank lines?', a: 'Blank lines remain blank.' },
-    ]),
+    component: dynamic(() => import('../components/tools/trim-each-line')),
+    tags: ["clean", "lines", "spaces"],
+    Icon: Filter,
+    seoTitle: 'Trim Each Line — Online',
+    seoDescription: 'Trim spaces from every line. Runs fully in your browser — free and private.',
+    Long: makeLong('Trim Each Line','Trim spaces from every line.', ["Trim each line individually", "Keeps blank lines blank", "Does not collapse inner spaces"], ['Paste your text','Adjust options','Copy or download'], ["Normalize paste", "Before diffs", "CSV prep"]),
   }),
   R({
-    slug: 'remove-duplicate-words', name: 'Remove Duplicate Words',
+    slug: 'remove-duplicate-words',
+    name: 'Remove Duplicate Words',
     description: 'Remove repeated words, keeping first occurrence.',
-    component: dynamic(() => import('../components/tools/remove-duplicate-words.jsx')),
-    tags: ['clean','words'], Icon: Filter,
-    seoTitle: 'Remove Duplicate Words — Keep First', seoDescription: 'Delete duplicate words (case-insensitive) and keep the first.',
-    Long: Long_RemoveDuplicateWords,
-    faqs: addFaqs('Remove Duplicate Words', [
-      { q: 'Case sensitivity?', a: 'By default case-insensitive; toggle in the tool if provided.' },
-      { q: 'What counts as a word?', a: 'Letters/digits/underscore and common apostrophes/hyphens.' },
-    ]),
+    component: dynamic(() => import('../components/tools/remove-duplicate-words')),
+    tags: ["clean", "words"],
+    Icon: Filter,
+    seoTitle: 'Remove Duplicate Words — Online',
+    seoDescription: 'Remove repeated words, keeping first occurrence. Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Duplicate Words','Remove repeated words, keeping first occurrence.', ["Case-insensitive by default", "Keeps first occurrence", "Handles apostrophes/hyphens"], ['Paste your text','Adjust options','Copy or download'], ["Keyword work", "Text analysis", "Vocabulary review"]),
   }),
   R({
-    slug: 'unique-words', name: 'Unique Words',
+    slug: 'unique-words',
+    name: 'Unique Words',
     description: 'List unique words (lowercased, sorted).',
-    component: dynamic(() => import('../components/tools/unique-words.jsx')),
-    tags: ['analyze','words','count'], Icon: Sigma,
-    seoTitle: 'Unique Words — Extract & Sort', seoDescription: 'Extract unique words, normalize case, and sort alphabetically.',
-    Long: Long_UniqueWords,
-    faqs: addFaqs('Unique Words', [
-      { q: 'Are results sorted?', a: 'Yes—alphabetically after lowercasing.' },
-      { q: 'Duplicates with punctuation?', a: 'Punctuation is stripped before comparison.' },
-    ]),
+    component: dynamic(() => import('../components/tools/unique-words')),
+    tags: ["analyze", "words", "count"],
+    Icon: Sigma,
+    seoTitle: 'Unique Words — Online',
+    seoDescription: 'List unique words (lowercased, sorted). Runs fully in your browser — free and private.',
+    Long: makeLong('Unique Words','List unique words (lowercased, sorted).', ["Lowercase & punctuation-stripped", "Sorted alphabetically", "One word per line output"], ['Paste your text','Adjust options','Copy or download'], ["Keyword work", "Text analysis", "Vocabulary review"]),
   }),
   R({
-    slug: 'sort-unique-lines', name: 'Sort Unique Lines',
+    slug: 'sort-unique-lines',
+    name: 'Sort Unique Lines',
     description: 'Unique + alphabetical sort in one step.',
-    component: dynamic(() => import('../components/tools/sort-unique-lines.jsx')),
-    tags: ['lines','sort','dedupe'], Icon: ListOrdered,
-    seoTitle: 'Sort Unique Lines — Dedupe & Sort', seoDescription: 'Remove duplicate lines and sort the rest alphabetically.',
-    Long: Long_SortUniqueLines,
-    faqs: addFaqs('Sort Unique Lines', [
-      { q: 'Stable after dedupe?', a: 'Duplicates are removed, then the remainder is sorted.' },
-      { q: 'Reverse order?', a: 'Use the descending option (if available) to flip the result.' },
-    ]),
+    component: dynamic(() => import('../components/tools/sort-unique-lines')),
+    tags: ["lines", "sort", "dedupe"],
+    Icon: ListOrdered,
+    seoTitle: 'Sort Unique Lines — Online',
+    seoDescription: 'Unique + alphabetical sort in one step. Runs fully in your browser — free and private.',
+    Long: makeLong('Sort Unique Lines','Unique + alphabetical sort in one step.', ["Removes duplicates, then sorts", "Consistent, tidy output", "Good for lists & configs"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
   }),
   R({
-    slug: 'sort-words', name: 'Sort Words',
+    slug: 'sort-words',
+    name: 'Sort Words',
     description: 'Sort words A→Z.',
-    component: dynamic(() => import('../components/tools/sort-words.jsx')),
-    tags: ['words','sort'], Icon: Type,
-    seoTitle: 'Sort Words — Alphabetical', seoDescription: 'Sort all words in the text alphabetically (locale-aware).',
-    Long: Long_SortWords,
-    faqs: addFaqs('Sort Words', [
-      { q: 'Locale aware?', a: 'Yes—uses the browser’s localeCompare.' },
-      { q: 'Numbers inside words?', a: 'Sorting is lexical, not numeric.' },
-    ]),
+    component: dynamic(() => import('../components/tools/sort-words')),
+    tags: ["words", "sort"],
+    Icon: Type,
+    seoTitle: 'Sort Words — Online',
+    seoDescription: 'Sort words A→Z. Runs fully in your browser — free and private.',
+    Long: makeLong('Sort Words','Sort words A→Z.', ["Locale-aware alphabetical order", "Ignores punctuation", "Optionally unique (combine with Unique Words)"], ['Paste your text','Adjust options','Copy or download'], ["Keyword work", "Text analysis", "Vocabulary review"]),
   }),
   R({
-    slug: 'extract-urls', name: 'Extract URLs',
+    slug: 'extract-urls',
+    name: 'Extract URLs',
     description: 'Find and list all URLs.',
-    component: dynamic(() => import('../components/tools/extract-urls.jsx')),
-    tags: ['extract','urls'], Icon: Link,
-    seoTitle: 'Extract URLs — Find Links', seoDescription: 'Extract and deduplicate all web links from your text.',
-    Long: Long_ExtractUrls,
-    faqs: addFaqs('Extract URLs', [
-      { q: 'Which schemes are supported?', a: 'http and https.' },
-      { q: 'Duplicates?', a: 'Results are deduplicated automatically.' },
-    ]),
+    component: dynamic(() => import('../components/tools/extract-urls')),
+    tags: ["extract", "urls"],
+    Icon: Link,
+    seoTitle: 'Extract URLs — Online',
+    seoDescription: 'Find and list all URLs. Runs fully in your browser — free and private.',
+    Long: makeLong('Extract URLs','Find and list all URLs.', ["Finds http/https links", "Deduplicates automatically", "Extracts from mixed text"], ['Paste your text','Adjust options','Copy or download'], ["Data scraping", "List building", "Audits"]),
   }),
   R({
-    slug: 'extract-emails', name: 'Extract Emails',
+    slug: 'extract-emails',
+    name: 'Extract Emails',
     description: 'Find and list email addresses.',
-    component: dynamic(() => import('../components/tools/extract-emails.jsx')),
-    tags: ['extract','emails'], Icon: Link,
-    seoTitle: 'Extract Emails — Find Addresses', seoDescription: 'Extract and deduplicate email addresses from text.',
-    Long: Long_ExtractEmails,
-    faqs: addFaqs('Extract Emails', [
-      { q: 'Validation strictness?', a: 'Uses a pragmatic pattern for typical emails; not a full RFC validator.' },
-      { q: 'Duplicates?', a: 'Results are deduplicated automatically.' },
-    ]),
+    component: dynamic(() => import('../components/tools/extract-emails')),
+    tags: ["extract", "emails"],
+    Icon: Link,
+    seoTitle: 'Extract Emails — Online',
+    seoDescription: 'Find and list email addresses. Runs fully in your browser — free and private.',
+    Long: makeLong('Extract Emails','Find and list email addresses.', ["Pragmatic email pattern", "Deduplicates addresses", "Skips obvious invalids"], ['Paste your text','Adjust options','Copy or download'], ["Data scraping", "List building", "Audits"]),
   }),
   R({
-    slug: 'extract-numbers', name: 'Extract Numbers',
+    slug: 'extract-numbers',
+    name: 'Extract Numbers',
     description: 'List all numbers (ints/floats).',
-    component: dynamic(() => import('../components/tools/extract-numbers.jsx')),
-    tags: ['extract','numbers'], Icon: Sigma,
-    seoTitle: 'Extract Numbers — Integers & Floats', seoDescription: 'Pull out all numbers (including decimals and negatives).',
-    Long: Long_ExtractNumbers,
-    faqs: addFaqs('Extract Numbers', [
-      { q: 'Thousands separators?', a: 'Not parsed; digits are extracted as sequences (e.g., 1,234 → 1 and 234).' },
-      { q: 'Scientific notation?', a: 'Basic pattern; 1e5 may not be recognized as a single number.' },
-    ]),
+    component: dynamic(() => import('../components/tools/extract-numbers')),
+    tags: ["extract", "numbers"],
+    Icon: Sigma,
+    seoTitle: 'Extract Numbers — Online',
+    seoDescription: 'List all numbers (ints/floats). Runs fully in your browser — free and private.',
+    Long: makeLong('Extract Numbers','List all numbers (ints/floats).', ["Captures ints, decimals & negatives", "Ignores thousand separators", "Quick numeric scraping"], ['Paste your text','Adjust options','Copy or download'], ["Data scraping", "List building", "Audits"]),
   }),
   R({
-    slug: 'extract-hashtags', name: 'Extract Hashtags',
+    slug: 'extract-hashtags',
+    name: 'Extract Hashtags',
     description: 'List unique hashtags (Unicode-aware).',
-    component: dynamic(() => import('../components/tools/extract-hashtags.jsx')),
-    tags: ['extract','hashtags'], Icon: Type,
-    seoTitle: 'Extract Hashtags — Unique List', seoDescription: 'Extract and dedupe hashtags, with Unicode support.',
-    Long: Long_ExtractHashtags,
-    faqs: addFaqs('Extract Hashtags', [
-      { q: 'Unicode support?', a: 'Yes—letters/digits/underscore across many scripts.' },
-      { q: 'Duplicates?', a: 'Results are deduplicated automatically.' },
-    ]),
+    component: dynamic(() => import('../components/tools/extract-hashtags')),
+    tags: ["extract", "hashtags"],
+    Icon: Type,
+    seoTitle: 'Extract Hashtags — Online',
+    seoDescription: 'List unique hashtags (Unicode-aware). Runs fully in your browser — free and private.',
+    Long: makeLong('Extract Hashtags','List unique hashtags (Unicode-aware).', ["Unicode-aware #hashtag scan", "Lowercases & dedupes", "Great for social text"], ['Paste your text','Adjust options','Copy or download'], ["Data scraping", "List building", "Audits"]),
   }),
   R({
-    slug: 'find-and-replace', name: 'Find & Replace',
+    slug: 'find-and-replace',
+    name: 'Find & Replace',
     description: 'Simple find/replace with flags.',
-    component: dynamic(() => import('../components/tools/find-and-replace.jsx')),
-    tags: ['search','replace'], Icon: Wand2,
-    seoTitle: 'Find and Replace — Text', seoDescription: 'Find and replace text (case-insensitive and replace-all options).',
-    Long: Long_FindAndReplace,
-    faqs: addFaqs('Find & Replace', [
-      { q: 'Regex or plain text?', a: 'This uses plain-text search with optional flags. Use Regex Replace for patterns.' },
-      { q: 'Replace all?', a: 'Yes—enable “replace all” to change every match.' },
-    ]),
+    component: dynamic(() => import('../components/tools/find-and-replace')),
+    tags: ["search", "replace"],
+    Icon: Wand2,
+    seoTitle: 'Find & Replace — Online',
+    seoDescription: 'Simple find/replace with flags. Runs fully in your browser — free and private.',
+    Long: makeLong('Find & Replace','Simple find/replace with flags.', ["Plain-text search", "Replace one or all", "Case-insensitive option"], ['Paste your text','Adjust options','Copy or download'], ["Text cleanup", "Refactors", "Bulk edits"]),
   }),
   R({
-    slug: 'regex-replace', name: 'Regex Replace',
+    slug: 'regex-replace',
+    name: 'Regex Replace',
     description: 'Search/replace using a RegExp.',
-    component: dynamic(() => import('../components/tools/regex-replace.jsx')),
-    tags: ['regex','replace','advanced'], Icon: Braces,
-    seoTitle: 'Regex Replace — Online', seoDescription: 'Use JavaScript regular expressions to transform text.',
-    Long: Long_RegexReplace,
-    faqs: addFaqs('Regex Replace', [
-      { q: 'Which flags can I use?', a: 'Standard JS flags: g, i, m, s, u, y.' },
-      { q: 'Backreferences?', a: 'Yes—use $1, $2, etc. in the replacement string.' },
-    ]),
+    component: dynamic(() => import('../components/tools/regex-replace')),
+    tags: ["regex", "replace", "advanced"],
+    Icon: Braces,
+    seoTitle: 'Regex Replace — Online',
+    seoDescription: 'Search/replace using a RegExp. Runs fully in your browser — free and private.',
+    Long: makeLong('Regex Replace','Search/replace using a RegExp.', ["JavaScript RegExp support", "Flags: g i m s u y", "Backreferences in replacement"], ['Paste your text','Adjust options','Copy or download'], ["Advanced replaces", "Filtering logs", "Data shaping"]),
   }),
   R({
-    slug: 'rot13', name: 'ROT13',
+    slug: 'rot13',
+    name: 'ROT13',
     description: 'ROT13 encoder/decoder.',
-    component: dynamic(() => import('../components/tools/rot13.jsx')),
-    tags: ['encode','cipher'], Icon: Braces,
-    seoTitle: 'ROT13 — Encode/Decode', seoDescription: 'Apply ROT13 to any text instantly in your browser.',
-    Long: Long_Rot13,
-    faqs: addFaqs('ROT13', [
-      { q: 'Is ROT13 secure?', a: 'No—ROT13 is for obfuscation, not cryptographic security.' },
-      { q: 'Round-trippable?', a: 'Yes—applying ROT13 twice returns the original.' },
-    ]),
+    component: dynamic(() => import('../components/tools/rot13')),
+    tags: ["encode", "cipher"],
+    Icon: Braces,
+    seoTitle: 'ROT13 — Online',
+    seoDescription: 'ROT13 encoder/decoder. Runs fully in your browser — free and private.',
+    Long: makeLong('ROT13','ROT13 encoder/decoder.', ["Classic substitution cipher", "Round-trippable decoding", "Good for puzzles & demos"], ['Paste your text','Adjust options','Copy or download'], ["Learning/demos", "Puzzles", "Light obfuscation"]),
   }),
   R({
-    slug: 'caesar-cipher', name: 'Caesar Cipher',
+    slug: 'caesar-cipher',
+    name: 'Caesar Cipher',
     description: 'Shift letters by N (classic cipher).',
-    component: dynamic(() => import('../components/tools/caesar-cipher.jsx')),
-    tags: ['encode','cipher'], Icon: Braces,
-    seoTitle: 'Caesar Cipher — Shift Text', seoDescription: 'Encode text with a configurable Caesar shift.',
-    Long: Long_CaesarCipher,
-    faqs: addFaqs('Caesar Cipher', [
-      { q: 'Case sensitive?', a: 'Yes—uppercase and lowercase are handled separately.' },
-      { q: 'Is it secure?', a: 'No—this is a simple substitution cipher for learning or puzzles.' },
-    ]),
+    component: dynamic(() => import('../components/tools/caesar-cipher')),
+    tags: ["encode", "cipher"],
+    Icon: Braces,
+    seoTitle: 'Caesar Cipher — Online',
+    seoDescription: 'Shift letters by N (classic cipher). Runs fully in your browser — free and private.',
+    Long: makeLong('Caesar Cipher','Shift letters by N (classic cipher).', ["Classic substitution cipher", "Round-trippable decoding", "Good for puzzles & demos"], ['Paste your text','Adjust options','Copy or download'], ["Learning/demos", "Puzzles", "Light obfuscation"]),
   }),
   R({
-    slug: 'morse-code-encode-decode', name: 'Morse Code Encode/Decode',
+    slug: 'morse-code-encode-decode',
+    name: 'Morse Code Encode/Decode',
     description: 'Convert text ↔ Morse code.',
-    component: dynamic(() => import('../components/tools/morse-code-encode-decode.jsx')),
-    tags: ['encode','morse'], Icon: Braces,
-    seoTitle: 'Morse Code — Encode/Decode', seoDescription: 'Convert text to Morse and back (common Latin letters & digits).',
-    Long: Long_MorseCodeEncodeDecode,
-    faqs: addFaqs('Morse Code Encode/Decode', [
-      { q: 'Supported characters?', a: 'Latin letters A–Z, digits 0–9, and space → /.' },
-      { q: 'Word separators?', a: 'Spaces in text become / in Morse; slashes decode back to spaces.' },
-    ]),
+    component: dynamic(() => import('../components/tools/morse-code-encode-decode')),
+    tags: ["encode", "morse"],
+    Icon: Braces,
+    seoTitle: 'Morse Code Encode/Decode — Online',
+    seoDescription: 'Convert text ↔ Morse code. Runs fully in your browser — free and private.',
+    Long: makeLong('Morse Code Encode/Decode','Convert text ↔ Morse code.', ["Letters A\u2013Z & digits 0\u20139", "Text \u2194 Morse mapping", "Slash (/) between words"], ['Paste your text','Adjust options','Copy or download'], ["Education", "Novelty", "Signals"]),
   }),
   R({
-    slug: 'csv-to-json', name: 'CSV → JSON',
+    slug: 'csv-to-json',
+    name: 'CSV → JSON',
     description: 'Convert simple CSV to JSON array.',
-    component: dynamic(() => import('../components/tools/csv-to-json.jsx')),
-    tags: ['convert','csv','json'], Icon: Braces,
-    seoTitle: 'CSV to JSON — Converter', seoDescription: 'Turn a simple CSV into a JSON array instantly.',
-    Long: Long_CsvToJson,
-    faqs: addFaqs('CSV → JSON', [
-      { q: 'Quoted commas?', a: 'This simple converter does not support quoted fields with commas.' },
-      { q: 'Header row required?', a: 'Yes—the first line is treated as headers.' },
-    ]),
+    component: dynamic(() => import('../components/tools/csv-to-json')),
+    tags: ["convert", "csv", "json"],
+    Icon: Braces,
+    seoTitle: 'CSV → JSON — Online',
+    seoDescription: 'Convert simple CSV to JSON array. Runs fully in your browser — free and private.',
+    Long: makeLong('CSV → JSON','Convert simple CSV to JSON array.', ["First row as headers", "Simple, lightweight parser", "No quoted comma support"], ['Paste your text','Adjust options','Copy or download'], ["Data interchange", "APIs", "Reports"]),
   }),
   R({
-    slug: 'json-to-csv', name: 'JSON → CSV',
+    slug: 'json-to-csv',
+    name: 'JSON → CSV',
     description: 'Convert JSON array to CSV.',
-    component: dynamic(() => import('../components/tools/json-to-csv.jsx')),
-    tags: ['convert','json','csv'], Icon: Braces,
-    seoTitle: 'JSON to CSV — Converter', seoDescription: 'Export a JSON array as CSV with header row.',
-    Long: Long_JsonToCsv,
-    faqs: addFaqs('JSON → CSV', [
-      { q: 'Input format?', a: 'A JSON array of objects, e.g., [{"name":"Ada","age":33}].' },
-      { q: 'Missing fields?', a: 'Missing keys are left blank in their CSV cells.' },
-    ]),
+    component: dynamic(() => import('../components/tools/json-to-csv')),
+    tags: ["convert", "json", "csv"],
+    Icon: Braces,
+    seoTitle: 'JSON → CSV — Online',
+    seoDescription: 'Convert JSON array to CSV. Runs fully in your browser — free and private.',
+    Long: makeLong('JSON → CSV','Convert JSON array to CSV.', ["Derives headers from keys", "Escapes commas & quotes", "Fast export to CSV"], ['Paste your text','Adjust options','Copy or download'], ["Data interchange", "APIs", "Reports"]),
   }),
   R({
-    slug: 'markdown-to-html', name: 'Markdown → HTML',
+    slug: 'markdown-to-html',
+    name: 'Markdown → HTML',
     description: 'Lightweight Markdown to HTML.',
-    component: dynamic(() => import('../components/tools/markdown-to-html.jsx')),
-    tags: ['convert','markdown','html'], Icon: Braces,
-    seoTitle: 'Markdown to HTML — Converter', seoDescription: 'Convert simple Markdown features to HTML.',
-    Long: Long_MarkdownToHtml,
-    faqs: addFaqs('Markdown → HTML', [
-      { q: 'Which syntax is supported?', a: 'Headings, bold, italics, links, and basic paragraphs.' },
-      { q: 'Full CommonMark?', a: 'This is a lightweight mapper, not a full spec implementation.' },
-    ]),
+    component: dynamic(() => import('../components/tools/markdown-to-html')),
+    tags: ["convert", "markdown", "html"],
+    Icon: Braces,
+    seoTitle: 'Markdown → HTML — Online',
+    seoDescription: 'Lightweight Markdown to HTML. Runs fully in your browser — free and private.',
+    Long: makeLong('Markdown → HTML','Lightweight Markdown to HTML.', ["Headings, bold/italic, links", "Paragraph detection", "Simple & safe conversion"], ['Paste your text','Adjust options','Copy or download'], ["Data interchange", "APIs", "Reports"]),
   }),
   R({
-    slug: 'html-to-markdown', name: 'HTML → Markdown',
+    slug: 'html-to-markdown',
+    name: 'HTML → Markdown',
     description: 'Simplify HTML into Markdown.',
-    component: dynamic(() => import('../components/tools/html-to-markdown.jsx')),
-    tags: ['convert','html','markdown'], Icon: Braces,
-    seoTitle: 'HTML to Markdown — Converter', seoDescription: 'Convert basic HTML tags into Markdown equivalents.',
-    Long: Long_HtmlToMarkdown,
-    faqs: addFaqs('HTML → Markdown', [
-      { q: 'Supported tags?', a: 'Common tags like h1–h3, strong/b, em/i, a, br, p, li.' },
-      { q: 'Removes unknown tags?', a: 'Unrecognized tags are stripped.' },
-    ]),
+    component: dynamic(() => import('../components/tools/html-to-markdown')),
+    tags: ["convert", "html", "markdown"],
+    Icon: Braces,
+    seoTitle: 'HTML → Markdown — Online',
+    seoDescription: 'Simplify HTML into Markdown. Runs fully in your browser — free and private.',
+    Long: makeLong('HTML → Markdown','Simplify HTML into Markdown.', ["h1\u2013h3, strong/em, a, br, p, li", "Removes unknown tags", "Readable Markdown output"], ['Paste your text','Adjust options','Copy or download'], ["Data interchange", "APIs", "Reports"]),
   }),
   R({
-    slug: 'remove-duplicate-paragraphs', name: 'Remove Duplicate Paragraphs',
+    slug: 'remove-duplicate-paragraphs',
+    name: 'Remove Duplicate Paragraphs',
     description: 'Dedupe repeated paragraphs.',
-    component: dynamic(() => import('../components/tools/remove-duplicate-paragraphs.jsx')),
-    tags: ['clean','paragraphs','dedupe'], Icon: ListOrdered,
-    seoTitle: 'Remove Duplicate Paragraphs — Dedupe Blocks', seoDescription: 'Remove repeated paragraphs while preserving spacing.',
-    Long: Long_RemoveDuplicateParagraphs,
-    faqs: addFaqs('Remove Duplicate Paragraphs', [
-      { q: 'How are paragraphs detected?', a: 'Separated by one or more blank lines.' },
-      { q: 'Whitespace-insensitive?', a: 'Whitespace at paragraph edges is trimmed before comparison.' },
-    ]),
+    component: dynamic(() => import('../components/tools/remove-duplicate-paragraphs')),
+    tags: ["clean", "paragraphs", "dedupe"],
+    Icon: ListOrdered,
+    seoTitle: 'Remove Duplicate Paragraphs — Online',
+    seoDescription: 'Dedupe repeated paragraphs. Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Duplicate Paragraphs','Dedupe repeated paragraphs.', ["Blank-line paragraph detection", "Whitespace-trimmed compare", "Preserves gaps between blocks"], ['Paste your text','Adjust options','Copy or download'], ["Long-form editing", "Duplicate detection", "Merging sources"]),
   }),
   R({
-    slug: 'invert-case', name: 'Invert Case',
+    slug: 'invert-case',
+    name: 'Invert Case',
     description: 'Swap UPPER↔lower for each letter.',
-    component: dynamic(() => import('../components/tools/invert-case.jsx')),
-    tags: ['case','transform'], Icon: Type,
-    seoTitle: 'Invert Case — Swap Upper/Lower', seoDescription: 'Flip the case of every letter in your text.',
-    Long: Long_InvertCase,
-    faqs: addFaqs('Invert Case', [
-      { q: 'Affects non-letters?', a: 'No—only alphabetic characters change case.' },
-      { q: 'Accented letters?', a: 'Most accented letters invert as supported by the browser.' },
-    ]),
+    component: dynamic(() => import('../components/tools/invert-case')),
+    tags: ["case", "transform"],
+    Icon: Type,
+    seoTitle: 'Invert Case — Online',
+    seoDescription: 'Swap UPPER↔lower for each letter. Runs fully in your browser — free and private.',
+    Long: makeLong('Invert Case','Swap UPPER↔lower for each letter.', ["Swap lower/upper letters", "Leaves digits/symbols", "Great for stylistic toggles"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
   }),
   R({
-    slug: 'chunk-text', name: 'Chunk Text',
+    slug: 'chunk-text',
+    name: 'Chunk Text',
     description: 'Split text into fixed-size chunks.',
-    component: dynamic(() => import('../components/tools/chunk-text.jsx')),
-    tags: ['split','format'], Icon: ListOrdered,
-    seoTitle: 'Chunk Text — Split by Length', seoDescription: 'Divide text into fixed-length chunks for easier handling.',
-    Long: Long_ChunkText,
-    faqs: addFaqs('Chunk Text', [
-      { q: 'Word-safe splitting?', a: 'This version splits by character length; words may break at boundaries.' },
-      { q: 'Custom separators?', a: 'Yes—choose the joiner inserted between chunks.' },
-    ]),
+    component: dynamic(() => import('../components/tools/chunk-text')),
+    tags: ["split", "format"],
+    Icon: ListOrdered,
+    seoTitle: 'Chunk Text — Online',
+    seoDescription: 'Split text into fixed-size chunks. Runs fully in your browser — free and private.',
+    Long: makeLong('Chunk Text','Split text into fixed-size chunks.', ["Fixed-size chunking", "Custom joiner/separator", "Great for SMS/uploads"], ['Paste your text','Adjust options','Copy or download'], ["SMS/email limits", "Batching uploads", "UI text chunks"]),
+  }),
+  R({
+    slug: 'base32-encode-decode',
+    name: 'Base32 Encode/Decode',
+    description: 'Convert text to/from Base32.',
+    component: dynamic(() => import('../components/tools/base32-encode-decode')),
+    tags: ["encode"],
+    Icon: Braces,
+    seoTitle: 'Base32 Encode/Decode — Online',
+    seoDescription: 'Convert text to/from Base32. Runs fully in your browser — free and private.',
+    Long: makeLong('Base32 Encode/Decode','Convert text to/from Base32.', ["Encode/decode text safely", "Full Unicode support", "No server roundtrips"], ['Paste your text','Adjust options','Copy or download'], ["Web-safe transport", "Embedding in configs", "Basic interoperability"]),
+  }),
+  R({
+    slug: 'base58-encode-decode',
+    name: 'Base58 Encode/Decode',
+    description: 'Convert text to/from Base58 (Bitcoin-style).',
+    component: dynamic(() => import('../components/tools/base58-encode-decode')),
+    tags: ["encode"],
+    Icon: Braces,
+    seoTitle: 'Base58 Encode/Decode — Online',
+    seoDescription: 'Convert text to/from Base58 (Bitcoin-style). Runs fully in your browser — free and private.',
+    Long: makeLong('Base58 Encode/Decode','Convert text to/from Base58 (Bitcoin-style).', ["Encode/decode text safely", "Full Unicode support", "No server roundtrips"], ['Paste your text','Adjust options','Copy or download'], ["Web-safe transport", "Embedding in configs", "Basic interoperability"]),
+  }),
+  R({
+    slug: 'checksum-hash',
+    name: 'Checksum / Hash',
+    description: 'Compute common hashes from text (e.g., MD5/SHA).',
+    component: dynamic(() => import('../components/tools/checksum-hash')),
+    tags: ["hash", "checksum"],
+    Icon: Braces,
+    seoTitle: 'Checksum / Hash — Online',
+    seoDescription: 'Compute common hashes from text (e.g., MD5/SHA). Runs fully in your browser — free and private.',
+    Long: makeLong('Checksum / Hash','Compute common hashes from text (e.g., MD5/SHA).', ["MD5/SHA1/SHA256 (etc.)", "Hex and Base64 output (tool-dependent)", "Fast, offline hashing"], ['Paste your text','Adjust options','Copy or download'], ["Integrity checks", "Fingerprints", "Quick hashing"]),
+  }),
+  R({
+    slug: 'column-extractor',
+    name: 'Column Extractor',
+    description: 'Extract a specific column from delimited text.',
+    component: dynamic(() => import('../components/tools/column-extractor')),
+    tags: ["csv", "columns", "extract"],
+    Icon: ListOrdered,
+    seoTitle: 'Column Extractor — Online',
+    seoDescription: 'Extract a specific column from delimited text. Runs fully in your browser — free and private.',
+    Long: makeLong('Column Extractor','Extract a specific column from delimited text.', ["Select by index or header", "Custom delimiter", "Trim or keep whitespace"], ['Paste your text','Adjust options','Copy or download'], ["Spreadsheets", "Data cleaning", "Reports"]),
+  }),
+  R({
+    slug: 'csv-dedup',
+    name: 'CSV Dedupe',
+    description: 'Remove duplicate CSV rows (by whole row or column keys).',
+    component: dynamic(() => import('../components/tools/csv-dedup')),
+    tags: ["csv", "dedupe"],
+    Icon: ListOrdered,
+    seoTitle: 'CSV Dedupe — Online',
+    seoDescription: 'Remove duplicate CSV rows (by whole row or column keys). Runs fully in your browser — free and private.',
+    Long: makeLong('CSV Dedupe','Remove duplicate CSV rows (by whole row or column keys).', ["Remove duplicate rows", "Optionally key by columns", "Keeps first occurrence"], ['Paste your text','Adjust options','Copy or download'], ["Spreadsheets", "Data cleaning", "Reports"]),
+  }),
+  R({
+    slug: 'csv-diff',
+    name: 'CSV Diff',
+    description: 'Compare two CSVs and see added/removed/changed rows.',
+    component: dynamic(() => import('../components/tools/csv-diff')),
+    tags: ["csv", "diff", "compare"],
+    Icon: Sigma,
+    seoTitle: 'CSV Diff — Online',
+    seoDescription: 'Compare two CSVs and see added/removed/changed rows. Runs fully in your browser — free and private.',
+    Long: makeLong('CSV Diff','Compare two CSVs and see added/removed/changed rows.', ["Added/removed/changed sets", "Header-aware compare", "Line-by-line summary"], ['Paste your text','Adjust options','Copy or download'], ["Spreadsheets", "Data cleaning", "Reports"]),
+  }),
+  R({
+    slug: 'csv-merge',
+    name: 'CSV Merge',
+    description: 'Merge CSVs by header/columns (inner/left/right).',
+    component: dynamic(() => import('../components/tools/csv-merge')),
+    tags: ["csv", "merge"],
+    Icon: ListOrdered,
+    seoTitle: 'CSV Merge — Online',
+    seoDescription: 'Merge CSVs by header/columns (inner/left/right). Runs fully in your browser — free and private.',
+    Long: makeLong('CSV Merge','Merge CSVs by header/columns (inner/left/right).', ["Inner/left/right joins", "Select join key columns", "Merges headers safely"], ['Paste your text','Adjust options','Copy or download'], ["Spreadsheets", "Data cleaning", "Reports"]),
+  }),
+  R({
+    slug: 'csv-sort',
+    name: 'CSV Sort',
+    description: 'Sort CSV rows by one or more columns.',
+    component: dynamic(() => import('../components/tools/csv-sort')),
+    tags: ["csv", "sort"],
+    Icon: ListOrdered,
+    seoTitle: 'CSV Sort — Online',
+    seoDescription: 'Sort CSV rows by one or more columns. Runs fully in your browser — free and private.',
+    Long: makeLong('CSV Sort','Sort CSV rows by one or more columns.', ["Sort by one or more columns", "Ascending/descending per column", "Stable sort"], ['Paste your text','Adjust options','Copy or download'], ["Spreadsheets", "Data cleaning", "Reports"]),
+  }),
+  R({
+    slug: 'diacritics-remover',
+    name: 'Diacritics Remover',
+    description: 'Strip accents/diacritics while keeping base letters.',
+    component: dynamic(() => import('../components/tools/diacritics-remover')),
+    tags: ["clean", "normalize"],
+    Icon: Filter,
+    seoTitle: 'Diacritics Remover — Online',
+    seoDescription: 'Strip accents/diacritics while keeping base letters. Runs fully in your browser — free and private.',
+    Long: makeLong('Diacritics Remover','Strip accents/diacritics while keeping base letters.', ["Normalize to ASCII", "Works on mixed scripts", "Great for search/indexing"], ['Paste your text','Adjust options','Copy or download'], ["Search indexing", "Slug prep", "ASCII only systems"]),
+  }),
+  R({
+    slug: 'epoch-converter',
+    name: 'Epoch Converter',
+    description: 'Convert UNIX epoch ↔ date-time.',
+    component: dynamic(() => import('../components/tools/epoch-converter')),
+    tags: ["time", "convert"],
+    Icon: Sigma,
+    seoTitle: 'Epoch Converter — Online',
+    seoDescription: 'Convert UNIX epoch ↔ date-time. Runs fully in your browser — free and private.',
+    Long: makeLong('Epoch Converter','Convert UNIX epoch ↔ date-time.', ["Epoch \u2194 human date", "Handles seconds/ms", "Local time preview"], ['Paste your text','Adjust options','Copy or download'], ["APIs & logs", "DB timestamps", "Human-readable output"]),
+  }),
+  R({
+    slug: 'hmac-generator',
+    name: 'HMAC Generator',
+    description: 'Compute HMAC signatures for text (choose hash).',
+    component: dynamic(() => import('../components/tools/hmac-generator')),
+    tags: ["hash", "security"],
+    Icon: Braces,
+    seoTitle: 'HMAC Generator — Online',
+    seoDescription: 'Compute HMAC signatures for text (choose hash). Runs fully in your browser — free and private.',
+    Long: makeLong('HMAC Generator','Compute HMAC signatures for text (choose hash).', ["Choose SHA-256/384/512", "Hex/Base64 signature", "Key never leaves browser"], ['Paste your text','Adjust options','Copy or download'], ["Webhook signing", "API auth testing", "Security demos"]),
+  }),
+  R({
+    slug: 'html-entities',
+    name: 'HTML Entities',
+    description: 'Encode/decode HTML entities (&, <, etc).',
+    component: dynamic(() => import('../components/tools/html-entities')),
+    tags: ["html", "encode"],
+    Icon: Braces,
+    seoTitle: 'HTML Entities — Online',
+    seoDescription: 'Encode/decode HTML entities (&, <, etc). Runs fully in your browser — free and private.',
+    Long: makeLong('HTML Entities','Encode/decode HTML entities (&, <, etc).', ["Encode & decode", "Handle common entities", "Great for HTML snippets"], ['Paste your text','Adjust options','Copy or download'], ["CMS copy/paste", "Email to plain text", "Snippet cleanup"]),
+  }),
+  R({
+    slug: 'iban-validator',
+    name: 'IBAN Validator',
+    description: 'Validate International Bank Account Numbers.',
+    component: dynamic(() => import('../components/tools/iban-validator')),
+    tags: ["validate"],
+    Icon: Sigma,
+    seoTitle: 'IBAN Validator — Online',
+    seoDescription: 'Validate International Bank Account Numbers. Runs fully in your browser — free and private.',
+    Long: makeLong('IBAN Validator','Validate International Bank Account Numbers.', ["Validates IBAN checksum", "Supports many countries", "Upper/lower agnostic"], ['Paste your text','Adjust options','Copy or download'], ["Finance forms", "Onboarding", "Batch checks"]),
+  }),
+  R({
+    slug: 'json-diff',
+    name: 'JSON Diff',
+    description: 'Compare two JSON blobs and highlight differences.',
+    component: dynamic(() => import('../components/tools/json-diff')),
+    tags: ["json", "diff", "compare"],
+    Icon: Braces,
+    seoTitle: 'JSON Diff — Online',
+    seoDescription: 'Compare two JSON blobs and highlight differences. Runs fully in your browser — free and private.',
+    Long: makeLong('JSON Diff','Compare two JSON blobs and highlight differences.', ["Pretty side-by-side diff", "Highlights added/removed/changed", "Helpful for configs/APIs"], ['Paste your text','Adjust options','Copy or download'], ["APIs", "Configs", "Storage"]),
+  }),
+  R({
+    slug: 'json-xml',
+    name: 'JSON ↔ XML',
+    description: 'Convert JSON to XML and back (simple mappings).',
+    component: dynamic(() => import('../components/tools/json-xml')),
+    tags: ["json", "xml", "convert"],
+    Icon: Braces,
+    seoTitle: 'JSON ↔ XML — Online',
+    seoDescription: 'Convert JSON to XML and back (simple mappings). Runs fully in your browser — free and private.',
+    Long: makeLong('JSON ↔ XML','Convert JSON to XML and back (simple mappings).', ["Simple mapping (objects\u2192elements)", "Attributes not preserved (simple mode)", "Good for quick transforms"], ['Paste your text','Adjust options','Copy or download'], ["APIs", "Configs", "Storage"]),
+  }),
+  R({
+    slug: 'json-yaml',
+    name: 'JSON ↔ YAML',
+    description: 'Convert JSON to YAML and back.',
+    component: dynamic(() => import('../components/tools/json-yaml')),
+    tags: ["json", "yaml", "convert"],
+    Icon: Braces,
+    seoTitle: 'JSON ↔ YAML — Online',
+    seoDescription: 'Convert JSON to YAML and back. Runs fully in your browser — free and private.',
+    Long: makeLong('JSON ↔ YAML','Convert JSON to YAML and back.', ["Lossless for common cases", "Compact or pretty styles", "Round-trip friendly"], ['Paste your text','Adjust options','Copy or download'], ["APIs", "Configs", "Storage"]),
+  }),
+  R({
+    slug: 'jwt-decode',
+    name: 'JWT Decode',
+    description: 'Decode JSON Web Tokens (header/payload).',
+    component: dynamic(() => import('../components/tools/jwt-decode')),
+    tags: ["jwt", "decode"],
+    Icon: Braces,
+    seoTitle: 'JWT Decode — Online',
+    seoDescription: 'Decode JSON Web Tokens (header/payload). Runs fully in your browser — free and private.',
+    Long: makeLong('JWT Decode','Decode JSON Web Tokens (header/payload).', ["Decode header & payload", "No secret required", "Base64URL handling"], ['Paste your text','Adjust options','Copy or download'], ["Debugging JWTs", "Learning structure", "Inspect claims"]),
+  }),
+  R({
+    slug: 'lorem-ipsum-pro',
+    name: 'Lorem Ipsum Pro',
+    description: 'Generate paragraphs, lists, and titles of lorem ipsum.',
+    component: dynamic(() => import('../components/tools/lorem-ipsum-pro')),
+    tags: ["generate", "text"],
+    Icon: Type,
+    seoTitle: 'Lorem Ipsum Pro — Online',
+    seoDescription: 'Generate paragraphs, lists, and titles of lorem ipsum. Runs fully in your browser — free and private.',
+    Long: makeLong('Lorem Ipsum Pro','Generate paragraphs, lists, and titles of lorem ipsum.', ["Paragraphs, sentences, lists", "Adjust length & style", "Copy/download output"], ['Paste your text','Adjust options','Copy or download'], ["Design mocks", "Drafts", "Placeholders"]),
+  }),
+  R({
+    slug: 'luhn-validator',
+    name: 'Luhn Validator',
+    description: 'Check numbers using the Luhn checksum (cards/IDs).',
+    component: dynamic(() => import('../components/tools/luhn-validator')),
+    tags: ["validate", "numbers"],
+    Icon: Sigma,
+    seoTitle: 'Luhn Validator — Online',
+    seoDescription: 'Check numbers using the Luhn checksum (cards/IDs). Runs fully in your browser — free and private.',
+    Long: makeLong('Luhn Validator','Check numbers using the Luhn checksum (cards/IDs).', ["Instant pass/fail result", "Explains checksum steps", "Great for test data"], ['Paste your text','Adjust options','Copy or download'], ["Form validation", "Test data", "Education"]),
+  }),
+  R({
+    slug: 'mime-type-by-extension',
+    name: 'MIME Type by Extension',
+    description: 'Lookup MIME type from a file extension.',
+    component: dynamic(() => import('../components/tools/mime-type-by-extension')),
+    tags: ["lookup", "mime"],
+    Icon: Braces,
+    seoTitle: 'MIME Type by Extension — Online',
+    seoDescription: 'Lookup MIME type from a file extension. Runs fully in your browser — free and private.',
+    Long: makeLong('MIME Type by Extension','Lookup MIME type from a file extension.', ["Common extension map", "Search by .ext", "Add to clipboard quickly"], ['Paste your text','Adjust options','Copy or download'], ["HTTP headers", "Upload validation", "Dev tools"]),
+  }),
+  R({
+    slug: 'random-password',
+    name: 'Random Password',
+    description: 'Generate strong random passwords.',
+    component: dynamic(() => import('../components/tools/random-password')),
+    tags: ["generate", "security"],
+    Icon: Wand2,
+    seoTitle: 'Random Password — Online',
+    seoDescription: 'Generate strong random passwords. Runs fully in your browser — free and private.',
+    Long: makeLong('Random Password','Generate strong random passwords.', ["Length & charset controls", "Exclude ambiguous chars", "Copy-on-click"], ['Paste your text','Adjust options','Copy or download'], ["Accounts", "Vaults", "Staging creds"]),
+  }),
+  R({
+    slug: 'regex-tester',
+    name: 'Regex Tester',
+    description: 'Test JavaScript regular expressions on your text.',
+    component: dynamic(() => import('../components/tools/regex-tester')),
+    tags: ["regex", "test"],
+    Icon: Braces,
+    seoTitle: 'Regex Tester — Online',
+    seoDescription: 'Test JavaScript regular expressions on your text. Runs fully in your browser — free and private.',
+    Long: makeLong('Regex Tester','Test JavaScript regular expressions on your text.', ["Real-time match preview", "Flags toggle", "Group capture listing"], ['Paste your text','Adjust options','Copy or download'], ["Advanced replaces", "Filtering logs", "Data shaping"]),
+  }),
+  R({
+    slug: 'unicode-normalizer',
+    name: 'Unicode Normalizer',
+    description: 'Normalize text to NFC/NFD/NFKC/NFKD.',
+    component: dynamic(() => import('../components/tools/unicode-normalizer')),
+    tags: ["clean", "unicode"],
+    Icon: Filter,
+    seoTitle: 'Unicode Normalizer — Online',
+    seoDescription: 'Normalize text to NFC/NFD/NFKC/NFKD. Runs fully in your browser — free and private.',
+    Long: makeLong('Unicode Normalizer','Normalize text to NFC/NFD/NFKC/NFKD.', ["NFC/NFD/NFKC/NFKD modes", "Fix visually identical glyphs", "Great before diffing"], ['Paste your text','Adjust options','Copy or download'], ["Normalization", "Deduplication", "Comparisons"]),
+  }),
+  R({
+    slug: 'url-parser',
+    name: 'URL Parser',
+    description: 'Break a URL into parts (protocol, host, path, query).',
+    component: dynamic(() => import('../components/tools/url-parser')),
+    tags: ["url", "parse"],
+    Icon: Link,
+    seoTitle: 'URL Parser — Online',
+    seoDescription: 'Break a URL into parts (protocol, host, path, query). Runs fully in your browser — free and private.',
+    Long: makeLong('URL Parser','Break a URL into parts (protocol, host, path, query).', ["Protocol/host/path/query", "Breaks query to pairs", "Edit & rebuild URL"], ['Paste your text','Adjust options','Copy or download'], ["Debugging links", "Analytics", "Routing"]),
+  }),
+  R({
+    slug: 'uuid-generator',
+    name: 'UUID Generator',
+    description: 'Generate UUIDs (v4).',
+    component: dynamic(() => import('../components/tools/uuid-generator')),
+    tags: ["generate", "ids"],
+    Icon: Wand2,
+    seoTitle: 'UUID Generator — Online',
+    seoDescription: 'Generate UUIDs (v4). Runs fully in your browser — free and private.',
+    Long: makeLong('UUID Generator','Generate UUIDs (v4).', ["UUID v4 generation", "Bulk list support", "Copy one-per-line"], ['Paste your text','Adjust options','Copy or download'], ["IDs in databases", "Logs", "Test fixtures"]),
+  }),
+  R({
+    slug: 'ascii85-encode-decode',
+    name: 'Ascii85 Encode/Decode',
+    description: 'Convert text to/from Ascii85 (Base85).',
+    component: dynamic(() => import('../components/tools/ascii85-encode-decode')),
+    tags: ["encode"],
+    Icon: Braces,
+    seoTitle: 'Ascii85 Encode/Decode — Online',
+    seoDescription: 'Convert text to/from Ascii85 (Base85). Runs fully in your browser — free and private.',
+    Long: makeLong('Ascii85 Encode/Decode','Convert text to/from Ascii85 (Base85).', ["Encode/decode text safely", "Full Unicode support", "No server roundtrips"], ['Paste your text','Adjust options','Copy or download'], ["Web-safe transport", "Embedding in configs", "Basic interoperability"]),
+  }),
+  R({
+    slug: 'quoted-printable-encode-decode',
+    name: 'Quoted-Printable Encode/Decode',
+    description: 'Encode/decode quoted-printable (email-safe) text.',
+    component: dynamic(() => import('../components/tools/quoted-printable-encode-decode')),
+    tags: ["encode", "email"],
+    Icon: Braces,
+    seoTitle: 'Quoted-Printable Encode/Decode — Online',
+    seoDescription: 'Encode/decode quoted-printable (email-safe) text. Runs fully in your browser — free and private.',
+    Long: makeLong('Quoted-Printable Encode/Decode','Encode/decode quoted-printable (email-safe) text.', ["Soft line breaks (=\\r\\n)", "Encodes non-printables", "Email-safe output"], ['Paste your text','Adjust options','Copy or download'], ["Email transport", "MIME bodies", "Quoted content"]),
+  }),
+  R({
+    slug: 'json-minify',
+    name: 'JSON Minify',
+    description: 'Remove whitespace/comments from JSON.',
+    component: dynamic(() => import('../components/tools/json-minify')),
+    tags: ["json", "minify"],
+    Icon: Braces,
+    seoTitle: 'JSON Minify — Online',
+    seoDescription: 'Remove whitespace/comments from JSON. Runs fully in your browser — free and private.',
+    Long: makeLong('JSON Minify','Remove whitespace/comments from JSON.', ["Removes whitespace", "Preserves string content", "Great for payloads"], ['Paste your text','Adjust options','Copy or download'], ["APIs", "Configs", "Storage"]),
+  }),
+  R({
+    slug: 'json-pretty',
+    name: 'JSON Pretty',
+    description: 'Pretty-print JSON with indentation.',
+    component: dynamic(() => import('../components/tools/json-pretty')),
+    tags: ["json", "format"],
+    Icon: Braces,
+    seoTitle: 'JSON Pretty — Online',
+    seoDescription: 'Pretty-print JSON with indentation. Runs fully in your browser — free and private.',
+    Long: makeLong('JSON Pretty','Pretty-print JSON with indentation.', ["2-space indentation", "Stable key order per input", "Easier to diff"], ['Paste your text','Adjust options','Copy or download'], ["APIs", "Configs", "Storage"]),
+  }),
+  R({
+    slug: 'xml-pretty-minify',
+    name: 'XML Pretty/Minify',
+    description: 'Beautify or minify XML code.',
+    component: dynamic(() => import('../components/tools/xml-pretty-minify')),
+    tags: ["xml", "format", "minify"],
+    Icon: Braces,
+    seoTitle: 'XML Pretty/Minify — Online',
+    seoDescription: 'Beautify or minify XML code. Runs fully in your browser — free and private.',
+    Long: makeLong('XML Pretty/Minify','Beautify or minify XML code.', ["Parser error detection", "Pretty or compact modes", "Indent control (2 spaces)"], ['Paste your text','Adjust options','Copy or download'], ["Configs", "RSS/Atom", "Interchange"]),
+  }),
+  R({
+    slug: 'html-pretty-minify',
+    name: 'HTML Pretty/Minify',
+    description: 'Beautify or minify HTML.',
+    component: dynamic(() => import('../components/tools/html-pretty-minify')),
+    tags: ["html", "format", "minify"],
+    Icon: Braces,
+    seoTitle: 'HTML Pretty/Minify — Online',
+    seoDescription: 'Beautify or minify HTML. Runs fully in your browser — free and private.',
+    Long: makeLong('HTML Pretty/Minify','Beautify or minify HTML.', ["Removes comments on minify", "Pretty prints nested tags", "Basic sanitizer"], ['Paste your text','Adjust options','Copy or download'], ["CMS copy/paste", "Email to plain text", "Snippet cleanup"]),
+  }),
+  R({
+    slug: 'css-minify',
+    name: 'CSS Minify',
+    description: 'Minify CSS by stripping whitespace/comments.',
+    component: dynamic(() => import('../components/tools/css-minify')),
+    tags: ["css", "minify"],
+    Icon: Braces,
+    seoTitle: 'CSS Minify — Online',
+    seoDescription: 'Minify CSS by stripping whitespace/comments. Runs fully in your browser — free and private.',
+    Long: makeLong('CSS Minify','Minify CSS by stripping whitespace/comments.', ["Strip comments & spaces", "Compress : ; { }", "Removes trailing semicolons"], ['Paste your text','Adjust options','Copy or download'], ["Frontend dev", "Themes", "Inlining"]),
+  }),
+  R({
+    slug: 'js-minify',
+    name: 'JS Minify (Simple)',
+    description: 'Lightweight JavaScript minifier (basic).',
+    component: dynamic(() => import('../components/tools/js-minify')),
+    tags: ["js", "minify"],
+    Icon: Braces,
+    seoTitle: 'JS Minify (Simple) — Online',
+    seoDescription: 'Lightweight JavaScript minifier (basic). Runs fully in your browser — free and private.',
+    Long: makeLong('JS Minify (Simple)','Lightweight JavaScript minifier (basic).', ["Remove comments/whitespace", "Compact around operators", "Quick inline minify"], ['Paste your text','Adjust options','Copy or download'], ["Snippets", "Bookmarklets", "Embeds"]),
+  }),
+  R({
+    slug: 'snake-case',
+    name: 'snake_case',
+    description: 'Convert text to snake_case.',
+    component: dynamic(() => import('../components/tools/snake-case')),
+    tags: ["case", "convert"],
+    Icon: Type,
+    seoTitle: 'snake_case — Online',
+    seoDescription: 'Convert text to snake_case. Runs fully in your browser — free and private.',
+    Long: makeLong('snake_case','Convert text to snake_case.', ["Tokenizes identifiers", "Handles camel/Pascal input", "ASCII diacritics stripped"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
+  }),
+  R({
+    slug: 'kebab-case',
+    name: 'kebab-case',
+    description: 'Convert text to kebab-case.',
+    component: dynamic(() => import('../components/tools/kebab-case')),
+    tags: ["case", "convert"],
+    Icon: Type,
+    seoTitle: 'kebab-case — Online',
+    seoDescription: 'Convert text to kebab-case. Runs fully in your browser — free and private.',
+    Long: makeLong('kebab-case','Convert text to kebab-case.', ["Tokenizes identifiers", "Handles camel/Pascal input", "ASCII diacritics stripped"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
+  }),
+  R({
+    slug: 'camel-case',
+    name: 'camelCase',
+    description: 'Convert text to camelCase.',
+    component: dynamic(() => import('../components/tools/camel-case')),
+    tags: ["case", "convert"],
+    Icon: Type,
+    seoTitle: 'camelCase — Online',
+    seoDescription: 'Convert text to camelCase. Runs fully in your browser — free and private.',
+    Long: makeLong('camelCase','Convert text to camelCase.', ["Tokenizes identifiers", "Handles camel/Pascal input", "ASCII diacritics stripped"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
+  }),
+  R({
+    slug: 'pascal-case',
+    name: 'PascalCase',
+    description: 'Convert text to PascalCase.',
+    component: dynamic(() => import('../components/tools/pascal-case')),
+    tags: ["case", "convert"],
+    Icon: Type,
+    seoTitle: 'PascalCase — Online',
+    seoDescription: 'Convert text to PascalCase. Runs fully in your browser — free and private.',
+    Long: makeLong('PascalCase','Convert text to PascalCase.', ["Tokenizes identifiers", "Handles camel/Pascal input", "ASCII diacritics stripped"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
+  }),
+  R({
+    slug: 'dot-case',
+    name: 'dot.case',
+    description: 'Convert text to dot.case.',
+    component: dynamic(() => import('../components/tools/dot-case')),
+    tags: ["case", "convert"],
+    Icon: Type,
+    seoTitle: 'dot.case — Online',
+    seoDescription: 'Convert text to dot.case. Runs fully in your browser — free and private.',
+    Long: makeLong('dot.case','Convert text to dot.case.', ["Tokenizes identifiers", "Handles camel/Pascal input", "ASCII diacritics stripped"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
+  }),
+  R({
+    slug: 'path-case',
+    name: 'path/case',
+    description: 'Convert text to path/case.',
+    component: dynamic(() => import('../components/tools/path-case')),
+    tags: ["case", "convert"],
+    Icon: Type,
+    seoTitle: 'path/case — Online',
+    seoDescription: 'Convert text to path/case. Runs fully in your browser — free and private.',
+    Long: makeLong('path/case','Convert text to path/case.', ["Tokenizes identifiers", "Handles camel/Pascal input", "ASCII diacritics stripped"], ['Paste your text','Adjust options','Copy or download'], ["Headings & labels", "Normalization before compare", "Consistent naming"]),
+  }),
+  R({
+    slug: 'ulid-generator',
+    name: 'ULID Generator',
+    description: 'Generate ULIDs (time-sortable IDs).',
+    component: dynamic(() => import('../components/tools/ulid-generator')),
+    tags: ["generate", "ids"],
+    Icon: Wand2,
+    seoTitle: 'ULID Generator — Online',
+    seoDescription: 'Generate ULIDs (time-sortable IDs). Runs fully in your browser — free and private.',
+    Long: makeLong('ULID Generator','Generate ULIDs (time-sortable IDs).', ["Time-sortable IDs", "Crockford Base32 alphabet", "Generate many at once"], ['Paste your text','Adjust options','Copy or download'], ["General text processing", "Scripting workflows", "Everyday editing"]),
+  }),
+  R({
+    slug: 'pbkdf2',
+    name: 'PBKDF2 Derivation',
+    description: 'Derive a key from password+salt (SHA-256/384/512).',
+    component: dynamic(() => import('../components/tools/pbkdf2')),
+    tags: ["security", "hash"],
+    Icon: Braces,
+    seoTitle: 'PBKDF2 Derivation — Online',
+    seoDescription: 'Derive a key from password+salt (SHA-256/384/512). Runs fully in your browser — free and private.',
+    Long: makeLong('PBKDF2 Derivation','Derive a key from password+salt (SHA-256/384/512).', ["Salt + iterations", "SHA-256/384/512 options", "Hex output of desired length"], ['Paste your text','Adjust options','Copy or download'], ["General text processing", "Scripting workflows", "Everyday editing"]),
+  }),
+  R({
+    slug: 'json-path-extract',
+    name: 'JSON Path Extract',
+    description: 'Extract a value from JSON by path (a.b[0].c).',
+    component: dynamic(() => import('../components/tools/json-path-extract')),
+    tags: ["json", "extract"],
+    Icon: Braces,
+    seoTitle: 'JSON Path Extract — Online',
+    seoDescription: 'Extract a value from JSON by path (a.b[0].c). Runs fully in your browser — free and private.',
+    Long: makeLong('JSON Path Extract','Extract a value from JSON by path (a.b[0].c).', ["a.b[0].c style paths", "Array index support", "Pretty JSON output"], ['Paste your text','Adjust options','Copy or download'], ["APIs", "Configs", "Storage"]),
+  }),
+  R({
+    slug: 'query-string-builder',
+    name: 'Query String Builder/Parser',
+    description: 'Build a query string from lines or parse an existing one.',
+    component: dynamic(() => import('../components/tools/query-string-builder')),
+    tags: ["url", "query"],
+    Icon: Link,
+    seoTitle: 'Query String Builder/Parser — Online',
+    seoDescription: 'Build a query string from lines or parse an existing one. Runs fully in your browser — free and private.',
+    Long: makeLong('Query String Builder/Parser','Build a query string from lines or parse an existing one.', ["Build from lines", "Parse ?a=1&b=2", "URLSearchParams-based"], ['Paste your text','Adjust options','Copy or download'], ["General text processing", "Scripting workflows", "Everyday editing"]),
+  }),
+  R({
+    slug: 'keep-lines-matching',
+    name: 'Keep Lines Matching (Regex)',
+    description: 'Keep only lines that match a regex.',
+    component: dynamic(() => import('../components/tools/keep-lines-matching')),
+    tags: ["regex", "lines", "filter"],
+    Icon: Filter,
+    seoTitle: 'Keep Lines Matching (Regex) — Online',
+    seoDescription: 'Keep only lines that match a regex. Runs fully in your browser — free and private.',
+    Long: makeLong('Keep Lines Matching (Regex)','Keep only lines that match a regex.', ["Keep only matching lines", "JS regex syntax", "Flags: g i m s u y"], ['Paste your text','Adjust options','Copy or download'], ["Advanced replaces", "Filtering logs", "Data shaping"]),
+  }),
+  R({
+    slug: 'remove-lines-matching',
+    name: 'Remove Lines Matching (Regex)',
+    description: 'Drop lines that match a regex.',
+    component: dynamic(() => import('../components/tools/remove-lines-matching')),
+    tags: ["regex", "lines", "filter"],
+    Icon: Filter,
+    seoTitle: 'Remove Lines Matching (Regex) — Online',
+    seoDescription: 'Drop lines that match a regex. Runs fully in your browser — free and private.',
+    Long: makeLong('Remove Lines Matching (Regex)','Drop lines that match a regex.', ["Remove matching lines", "JS regex syntax", "Flags: g i m s u y"], ['Paste your text','Adjust options','Copy or download'], ["Advanced replaces", "Filtering logs", "Data shaping"]),
+  }),
+  R({
+    slug: 'sort-lines-by-length',
+    name: 'Sort Lines by Length',
+    description: 'Order lines shortest → longest (or reverse).',
+    component: dynamic(() => import('../components/tools/sort-lines-by-length')),
+    tags: ["lines", "sort"],
+    Icon: ListOrdered,
+    seoTitle: 'Sort Lines by Length — Online',
+    seoDescription: 'Order lines shortest → longest (or reverse). Runs fully in your browser — free and private.',
+    Long: makeLong('Sort Lines by Length','Order lines shortest → longest (or reverse).', ["Ascending or descending", "Ties keep original order", "Great for summaries"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
+  }),
+  R({
+    slug: 'pad-lines',
+    name: 'Pad Lines',
+    description: 'Pad each line left/right to a target width.',
+    component: dynamic(() => import('../components/tools/pad-lines')),
+    tags: ["lines", "format"],
+    Icon: ListOrdered,
+    seoTitle: 'Pad Lines — Online',
+    seoDescription: 'Pad each line left/right to a target width. Runs fully in your browser — free and private.',
+    Long: makeLong('Pad Lines','Pad each line left/right to a target width.', ["Left or right pad", "Any pad char", "Fixed width tables"], ['Paste your text','Adjust options','Copy or download'], ["Logs & transcripts", "Lists & inventories", "Config files"]),
+  }),
+  R({
+    slug: 'csv-to-markdown-table',
+    name: 'CSV → Markdown Table',
+    description: 'Turn CSV into a Markdown table.',
+    component: dynamic(() => import('../components/tools/csv-to-markdown-table')),
+    tags: ["csv", "markdown", "convert"],
+    Icon: Braces,
+    seoTitle: 'CSV → Markdown Table — Online',
+    seoDescription: 'Turn CSV into a Markdown table. Runs fully in your browser — free and private.',
+    Long: makeLong('CSV → Markdown Table','Turn CSV into a Markdown table.', ["Auto column widths", "Header separator row", "Paste-ready Markdown"], ['Paste your text','Adjust options','Copy or download'], ["Spreadsheets", "Data cleaning", "Reports"]),
+  }),
+  R({
+    slug: 'domain-extractor',
+    name: 'Domain Extractor',
+    description: 'Extract unique hostnames from URLs.',
+    component: dynamic(() => import('../components/tools/domain-extractor')),
+    tags: ["url", "extract"],
+    Icon: Link,
+    seoTitle: 'Domain Extractor — Online',
+    seoDescription: 'Extract unique hostnames from URLs. Runs fully in your browser — free and private.',
+    Long: makeLong('Domain Extractor','Extract unique hostnames from URLs.', ["Extract hostnames only", "Deduplicates results", "Validates URLs safely"], ['Paste your text','Adjust options','Copy or download'], ["Audits", "Blocklists", "Whitelists"]),
+  }),
+  R({
+    slug: 'emoji-remover',
+    name: 'Emoji Remover',
+    description: 'Remove emoji/pictographs from text.',
+    component: dynamic(() => import('../components/tools/emoji-remover')),
+    tags: ["clean", "emoji"],
+    Icon: Filter,
+    seoTitle: 'Emoji Remover — Online',
+    seoDescription: 'Remove emoji/pictographs from text. Runs fully in your browser — free and private.',
+    Long: makeLong('Emoji Remover','Remove emoji/pictographs from text.', ["Removes pictographs & ZWJ", "Keeps normal text", "Great for logs & exports"], ['Paste your text','Adjust options','Copy or download'], ["Data exports", "Search indexing", "Cleaner logs"]),
   }),
 ];
 

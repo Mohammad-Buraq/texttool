@@ -2,63 +2,59 @@ import { notFound } from "next/navigation";
 import ToolLayout from "@/components/ToolLayout";
 import { Suspense } from "react";
 import { getAllTools, getToolBySlug, getRelatedTools } from "@/data/tools";
+import { getBaseUrl } from "@/lib/site";
 
 /** Pre-render all tool routes (SSG) */
 export async function generateStaticParams() {
   return getAllTools().map((t) => ({ slug: t.slug }));
 }
 
-/** Per-page SEO */
+/** Per-page SEO with absolute canonical + OG/Twitter images */
 export async function generateMetadata({ params }) {
   const tool = getToolBySlug(params.slug);
-  if (!tool) return { title: "Tool not found • Text Tools" };
+  if (!tool) return { title: "Tool not found • The Text Tool" };
 
-  const canonical = `/tools/${tool.slug}`;
+  const base = getBaseUrl();
+  const url = `${base}/tools/${tool.slug}`;
+  const imgUrl = `${base}/api/og?title=${encodeURIComponent(tool.name)}`;
+
   return {
-    title: tool.seoTitle || `${tool.name} — Free, Fast, Private`,
-    description: tool.seoDescription || tool.description,
-    alternates: { canonical },
+    title: `${tool.name} — Free Online Tool`,
+    description: tool.description,
+    alternates: { canonical: url },
     openGraph: {
-      title: tool.seoTitle || tool.name,
-      description: tool.seoDescription || tool.description,
-      url: canonical,
+      title: tool.name,
+      description: tool.description,
+      url,
       type: "website",
+      images: [{ url: imgUrl, width: 1200, height: 630, alt: tool.name }],
     },
     twitter: {
       card: "summary_large_image",
-      title: tool.seoTitle || tool.name,
-      description: tool.seoDescription || tool.description,
+      title: tool.name,
+      description: tool.description,
+      images: [imgUrl],
     },
   };
 }
 
-// ...imports & metadata unchanged...
-
-export default function ToolPage({ params }) {
+export default async function Page({ params }) {
   const tool = getToolBySlug(params.slug);
   if (!tool) return notFound();
 
+  // ✅ FIX 1: use the lowercase property from your registry
   const ToolComponent = tool.component;
-  const Related = getRelatedTools(tool.slug);
 
-  const faqSchema = tool.faqs?.length
-    ? {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: tool.faqs.map(({ q, a }) => ({
-          "@type": "Question",
-          name: q,
-          acceptedAnswer: { "@type": "Answer", text: a },
-        })),
-      }
-    : null;
+  // ✅ FIX 2: pass slug to related-tools helper (your helper expects a slug)
+  const related = getRelatedTools(tool.slug);
 
+  // (tool.Long usage is fine: member expression is allowed in JSX)
   return (
     <>
       <ToolLayout
         title={tool.name}
         description={tool.description}
-        related={Related}
+        related={related}
         longContent={tool.Long ? <tool.Long /> : null}
         accent={tool.accent || "blue"}
       >
@@ -66,13 +62,6 @@ export default function ToolPage({ params }) {
           <ToolComponent />
         </Suspense>
       </ToolLayout>
-
-      {faqSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-      )}
     </>
   );
 }
