@@ -10,13 +10,7 @@ export async function GET(req) {
   const category = (searchParams.get('category') || '').slice(0, 40)
   const brand = 'thetexttool.com'
 
-  // Optional font from /public/fonts
-  let fonts = []
-  try {
-    const fontData = await fetch(new URL('../../../public/fonts/Inter-SemiBold.ttf', import.meta.url)).then(r => r.arrayBuffer())
-    fonts = [{ name: 'Inter', data: fontData, weight: 600, style: 'normal' }]
-  } catch {}
-
+  // No local font to keep build simple on Vercel; uses system fallback
   return new ImageResponse(
     (
       <div
@@ -63,6 +57,6 @@ export async function GET(req) {
         </div>
       </div>
     ),
-    { width: 1200, height: 630, fonts }
+    { width: 1200, height: 630 }
   )
 }
