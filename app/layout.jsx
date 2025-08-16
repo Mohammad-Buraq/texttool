@@ -39,8 +39,8 @@ export default function RootLayout({ children }) {
                 <div className="flex items-center gap-2 sm:gap-4">
                   {/* Desktop nav (unchanged on ≥640px) */}
                   <nav className={`hidden sm:flex items-center gap-4 text-sm ${inter.className}`}>
-                    <a className="hover:underline" href="/categories">Categories</a>
                     <a className="hover:underline" href="/tools">All Tools</a>
+                    <a className="hover:underline" href="/categories">Categories</a>
                     <a className="hover:underline" href="/about">About</a>
                     <a className="hover:underline" href="/contact">Contact</a>
                     {/* Dark Mode stays in desktop row */}
