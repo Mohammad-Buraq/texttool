@@ -3,7 +3,7 @@ export const metadata = {
   title: "Text Tools — Free, Fast, Private Text Tools",
   description:
     "High-quality, mobile-friendly tools that run entirely in your browser.",
-  metadataBase: new URL("https://www.thetexttools.com"),
+  metadataBase: new URL("https://thetexttool.com"),
 };
 
 import "@/styles/globals.css";
@@ -61,8 +61,8 @@ export default function RootLayout({ children }) {
           {/* ===== FOOTER ===== */}
           <SiteFooter />
 
-          <Analytics />
         </Suspense>
+        <Analytics />
       </body>
     </html>
   );
