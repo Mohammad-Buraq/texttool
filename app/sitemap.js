@@ -20,6 +20,7 @@ export default async function sitemap() {
     { url: `${base}/about`, lastModified: nowIso, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${base}/contact`, lastModified: nowIso, changeFrequency: 'yearly', priority: 0.2 },
     { url: `${base}/categories`, lastModified: nowIso, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${base}/tools`, lastModified: nowIso, changeFrequency: 'weekly', priority: 0.7 },
   ]
 
   // Category pages (you already have /categories/[slug])
