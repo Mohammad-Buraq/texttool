@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "About • TextTools AI",
+  title: "About • TheTextTool",
   description: "Premium in-browser text utilities. Fast, private, and precise.",
 };
 
@@ -8,9 +8,9 @@ export default function About() {
     <div className="space-y-12">
       {/* Intro */}
       <section className="max-w-4xl">
-        <h1 className="text-4xl font-extrabold tracking-tight mb-4">About Text Tools</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight mb-4">About The Text Tool</h1>
         <p className="text-lg text-gray-700 dark:text-gray-300">
-          Text Tools is a collection of high-quality utilities that run entirely in your browser—
+          The Text Tool is a collection of high-quality utilities that run entirely in your browser—
           no account, no uploads, no distractions.
         </p>
       </section>

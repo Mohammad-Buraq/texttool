@@ -6,7 +6,7 @@ export default function ContactForm() {
     const f = new FormData(e.currentTarget)
     const subject = encodeURIComponent(`[TextTools AI] ${f.get('topic')||'Message'}`)
     const body = encodeURIComponent(`Name: ${f.get('name')}\nEmail: ${f.get('email')}\n\nMessage:\n${f.get('message')}`)
-    window.location.href = `mailto:hello@thetexttools.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:hello@thetexttool.com?subject=${subject}&body=${body}`
   }
   return (
     <form onSubmit={onSubmit} className="rounded-xl border border-gray-200 dark:border-gray-800 p-4 space-y-3">

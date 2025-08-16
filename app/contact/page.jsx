@@ -12,7 +12,7 @@ export default function Contact(){
       <section className="mx-auto max-w-3xl">
         <h1 className="text-3xl font-extrabold tracking-tight mb-3">Contact</h1>
         <p className="text-gray-700 dark:text-gray-300">
-          Email us at <a className="underline" href="mailto:hello@thetexttools.com">hello@thetexttools.com</a> — we read every message.
+          Email us at <a className="underline" href="mailto:hello@thetexttools.com">hello@thetexttool.com</a> — we read every message.
         </p>
       </section>
 
