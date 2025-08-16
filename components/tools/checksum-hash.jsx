@@ -3,52 +3,44 @@ import { useState, useEffect } from 'react'
 import ToolShell from '@/components/ToolShell'
 import { TextArea, CopyButton, DownloadButton, ClearButton } from '@/components/TextAreas'
 
-export default function ChecksumHash() {
-  const [input, setInput] = useState('')
-  const [output, setOutput] = useState('')
-
-  useEffect(() => {
-    let cancelled = false
-    ;(async () => {
-      try {
-        const text = input || ''
-
-    async function digest(algo, s){
-      const buf = await crypto.subtle.digest(algo, new TextEncoder().encode(s))
-      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('')
-    }
-    const m = text.match(/^algo\s*=\s*(SHA-1|SHA-256|SHA-384|SHA-512)\s*\n([\s\S]*)$/i)
-    const algo = (m?.[1] || 'SHA-256').toUpperCase()
-    const payload = m ? m[2] : text
-    const hex = await digest(algo, payload)
-    if(!cancelled) setOutput(hex)
-
-      } catch (e) {
-        if (!cancelled) setOutput('Error: ' + (e?.message || e))
-      }
+export default function ChecksumHash(){
+  const [input,setInput]=useState('hello')
+  const [algo,setAlgo]=useState('SHA-256')
+  const [out,setOut]=useState('')
+  useEffect(()=>{
+    let c=false
+    ;(async()=>{
+      try{
+        const enc=new TextEncoder()
+        const buf=enc.encode(input||'')
+        const dig=await crypto.subtle.digest(algo, buf)
+        const hex=Array.from(new Uint8Array(dig)).map(b=>b.toString(16).padStart(2,'0')).join('')
+        if(!c) setOut(hex)
+      }catch(e){ if(!c) setOut('Error: ' + (e?.message||e)) }
     })()
-    return () => { cancelled = true }
-  }, [input])
-
+    return ()=>{c=true}
+  }, [input,algo])
   return (
-    <ToolShell onCopy={() => navigator.clipboard.writeText(output)} onClear={() => setInput('')}>
+    <ToolShell onCopy={()=>navigator.clipboard.writeText(out)} onClear={()=>{setInput('')}}>
       <div className="grid2">
-        <TextArea
-          value={input}
-          onChange={setInput}
-          placeholder={`algo=SHA-256
-text to hash`}
-        />
         <div>
-          <TextArea value={output} onChange={() => {}} />
-          <div className="toolbar mt-2">
-            <CopyButton text={output} />
-            <DownloadButton text={output} />
-            <ClearButton onClear={() => setInput('')} />
+          <TextArea value={input} onChange={setInput} />
+          <div className="mt-2 flex items-center gap-4">
+            <label className="flex items-center gap-2">Algorithm
+              <select className="input" value={algo} onChange={e=>setAlgo(e.target.value)}>
+                <option>SHA-1</option>
+                <option>SHA-256</option>
+                <option>SHA-384</option>
+                <option>SHA-512</option>
+              </select>
+            </label>
           </div>
+        </div>
+        <div>
+          <TextArea value={out} onChange={()=>{}}/>
+          <div className="toolbar mt-2"><CopyButton text={out}/><DownloadButton text={out}/><ClearButton onClear={()=>{setInput('')}}/></div>
         </div>
       </div>
     </ToolShell>
   )
 }
-

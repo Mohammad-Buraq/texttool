@@ -4,54 +4,48 @@ import ToolShell from '@/components/ToolShell'
 import { TextArea, CopyButton, DownloadButton, ClearButton } from '@/components/TextAreas'
 
 export default function HmacGenerator(){
-  const [input, setInput] = useState('')
-  const [output, setOutput] = useState('')
+  const [data,setData]=useState('hello')
+  const [key,setKey]=useState('secret')
+  const [algo,setAlgo]=useState('SHA-256')
+  const [out,setOut]=useState('')
 
-  useEffect(() => {
-    let cancelled = false
-    ;(async () => {
-      try {
-        const text = input || ''
-        const m = text.match(/^key\s*=\s*(.*)\n(?:algo\s*=\s*(SHA-256|SHA-384|SHA-512)\s*\n)?([\s\S]*)$/i)
-        if (!m) { if (!cancelled) setOutput('key=<secret>\nalgo=SHA-256\n<text>'); return }
-        const [, key, algoMaybe, payload] = m
-        const algo = (algoMaybe || 'SHA-256').toUpperCase()
-
-        const enc = new TextEncoder()
-        const cryptoKey = await crypto.subtle.importKey(
-          'raw',
-          enc.encode(key),
-          { name: 'HMAC', hash: { name: algo } },
-          false,
-          ['sign']
-        )
-        const signature = await crypto.subtle.sign('HMAC', cryptoKey, enc.encode(payload || ''))
-        const hex = Array.from(new Uint8Array(signature)).map(b => b.toString(16).padStart(2, '0')).join('')
-        if (!cancelled) setOutput(hex)
-      } catch (e) {
-        if (!cancelled) setOutput('Error: ' + (e?.message || e))
+  useEffect(()=>{
+    let cancelled=false
+    ;(async()=>{
+      try{
+        const enc=new TextEncoder()
+        const k=await crypto.subtle.importKey('raw', enc.encode(key), {name:'HMAC', hash:{name:algo}}, false, ['sign'])
+        const sig=await crypto.subtle.sign('HMAC', k, enc.encode(data))
+        const hex=Array.from(new Uint8Array(sig)).map(b=>b.toString(16).padStart(2,'0')).join('')
+        if(!cancelled) setOut(hex)
+      }catch(e){
+        if(!cancelled) setOut('Error: ' + (e?.message||e))
       }
     })()
-    return () => { cancelled = true }
-  }, [input])
+    return ()=>{cancelled=true}
+  }, [data,key,algo])
 
   return (
-    <ToolShell onCopy={() => navigator.clipboard.writeText(output)} onClear={() => setInput('')}>
+    <ToolShell onCopy={()=>navigator.clipboard.writeText(out)} onClear={()=>{setData(''); setKey(''); setOut('')}}>
       <div className="grid2">
-        <TextArea
-          value={input}
-          onChange={setInput}
-          placeholder={`key=secret
-algo=SHA-256
-hello`}
-        />
         <div>
-          <TextArea value={output} onChange={() => {}} />
-          <div className="toolbar mt-2">
-            <CopyButton text={output} />
-            <DownloadButton text={output} />
-            <ClearButton onClear={() => setInput('')} />
+          <TextArea value={data} onChange={setData} placeholder="Data (message)"/>
+          <div className="mt-2 flex items-center gap-4 flex-wrap">
+            <label className="flex items-center gap-2">Key
+              <input className="input" value={key} onChange={e=>setKey(e.target.value)} />
+            </label>
+            <label className="flex items-center gap-2">Algorithm
+              <select className="input" value={algo} onChange={e=>setAlgo(e.target.value)}>
+                <option>SHA-256</option>
+                <option>SHA-384</option>
+                <option>SHA-512</option>
+              </select>
+            </label>
           </div>
+        </div>
+        <div>
+          <TextArea value={out} onChange={()=>{}}/>
+          <div className="toolbar mt-2"><CopyButton text={out}/><DownloadButton text={out}/><ClearButton onClear={()=>{setData(''); setKey(''); setOut('')}}/></div>
         </div>
       </div>
     </ToolShell>

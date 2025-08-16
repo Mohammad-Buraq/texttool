@@ -1,71 +1,74 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ToolShell from '@/components/ToolShell'
 import { TextArea, CopyButton, DownloadButton, ClearButton } from '@/components/TextAreas'
 
-export default function CsvSort() {
-  const [input, setInput] = useState('')
-  let output = ''
-  try {
-    const text = input || ''
-
-    function parseCSV(s, delim=','){
-      const out=[], row=[]; let i=0, cur='', inq=false
-      while(i<=s.length){
-        const ch = s[i] || ''
-        if(inq){
-          if(ch==='"'){ if(s[i+1]==='"'){ cur+='"'; i++ } else { inq=false } }
-          else { cur+=ch }
-        }else{
-          if(ch==='"'){ inq=true }
-          else if(ch===delim){ row.push(cur); cur='' }
-          else if(ch==='\n' || ch==='\r' || ch===''){ row.push(cur); out.push(row.slice()); row.length=0; cur=''; if(ch==='\r'&&s[i+1]==='\n') i++ }
-          else { cur+=ch }
-        }
-        i++
-      }
-      return out.filter(r=>r.length>1 || (r.length===1 && r[0]!==''))
-    }
-    function toCSV(rows, delim=','){
-      return rows.map(r=>r.map(c=> (/[",\n\r]/.test(c)? '"'+c.replace(/"/g,'""')+'"' : c)).join(delim)).join('\n')
-    }
-
-    const m = text.match(/^by\s*=\s*(\w+)(?:\s+(asc|desc))?\s*\n([\s\S]*)$/i)
-    if(!m) output = 'by=ColumnName asc|desc\nCSV...'
-    else {
-      const col=m[1], dir=(m[2]||'asc').toLowerCase(), payload=m[3]
-      const rows=parseCSV(payload); if(rows.length<2) output = payload
-      else {
-        const header=rows[0], idx=header.indexOf(col); if(idx<0) throw new Error('Column not found')
-        const body=rows.slice(1).sort((a,b)=> (a[idx]===b[idx]?0:(a[idx]<b[idx]?-1:1)) * (dir==='asc'?1:-1))
-        output = toCSV([header,...body])
+function parseCSV(text, delim=',') {
+  const out = []
+  const lines = (text || '').split(/\r?\n/)
+  for (const line of lines) {
+    const row = []
+    let i = 0, cur = '', inq = false
+    while (i < line.length) {
+      const ch = line[i]
+      if (inq) {
+        if (ch === '"' && line[i+1] === '"') { cur += '"'; i += 2; continue }
+        if (ch === '"') { inq = false; i++; continue }
+        cur += ch; i++; continue
+      } else {
+        if (ch === '"') { inq = true; i++; continue }
+        if (ch === delim) { row.push(cur); cur = ''; i++; continue }
+        cur += ch; i++; continue
       }
     }
-
-  } catch (e) {
-    output = 'Error: ' + (e?.message || e)
+    row.push(cur)
+    out.push(row)
   }
+  return out
+}
+function toCSV(rows, delim=',') {
+  return rows.map(r => r.map(v => {
+    v = String(v ?? '')
+    return /["\n\r,\t]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v
+  }).join(delim)).join('\n')
+}
+export default function CsvSort(){
+  const [input,setInput]=useState('')
+  let output=''
+  try{
+    const m=(input||'').match(/^col\s*=\s*(\d+)\n(?:dir\s*=\s*(asc|desc)\n)?(?:header\s*=\s*(yes|no)\n)?(?:delim\s*=\s*(,|\t|;)\n)?([\s\S]*)$/i)
+    if(!m){
+      output = 'col=1\ndir=asc\nheader=yes\ndelim=,\nname,age\nAda,33\nLinus,54'
+    }else{
+      const col = Math.max(1, parseInt(m[1],10))
+      const dir = (m[2]||'asc').toLowerCase()
+      const header = (m[3]||'yes').toLowerCase()==='yes'
+      const delim = m[4]||','
+      const rows = parseCSV(m[5], delim)
+      if(!rows.length){ output=''; }
+      else{
+        const hdr = header? rows.shift() : null
+        const idx = col-1
+        rows.sort((a,b)=>{
+          const av=a[idx]??'', bv=b[idx]??''
+          const na = av.trim()!=='' && !isNaN(+av), nb = bv.trim()!=='' && !isNaN(+bv)
+          const cmp = (na&&nb) ? (+av - +bv) : String(av).localeCompare(String(bv), undefined, {numeric:true, sensitivity:'base'})
+          return dir==='asc'? cmp : -cmp
+        })
+        const out = hdr? [hdr, ...rows] : rows
+        output = toCSV(out, delim)
+      }
+    }
+  }catch(e){ output='Error: ' + (e?.message||e) }
   return (
-    <ToolShell onCopy={() => navigator.clipboard.writeText(output)} onClear={() => setInput('')}>
+    <ToolShell onCopy={()=>navigator.clipboard.writeText(output)} onClear={()=>setInput('')}>
       <div className="grid2">
-        <TextArea
-          value={input}
-          onChange={setInput}
-          placeholder={`by=name asc
-name,age
-Bob,30
-Ada,33`}
-        />
+        <TextArea value={input} onChange={setInput} placeholder={"col=2\ndir=desc\nheader=yes\ndelim=,\nname,age\nAda,33\nLinus,54"}/> 
         <div>
-          <TextArea value={output} onChange={() => {}} />
-          <div className="toolbar mt-2">
-            <CopyButton text={output} />
-            <DownloadButton text={output} />
-            <ClearButton onClear={() => setInput('')} />
-          </div>
+          <TextArea value={output} onChange={()=>{}}/>
+          <div className="toolbar mt-2"><CopyButton text={output}/><DownloadButton text={output}/><ClearButton onClear={()=>setInput('')}/></div>
         </div>
       </div>
     </ToolShell>
   )
 }
-
